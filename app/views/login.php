@@ -1,3 +1,12 @@
+<?php
+//Escribimos el codigo
+session_start();
+if (isset($_SESSION["usuario_sesion"])) {
+    header("Location: views/dashboard.php");
+} else {
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,7 +139,7 @@ body {
 </head>
 <body>
     <div class="wrapper" >
-        <form action="controllers/ControllerUser.php" method="POST">
+        <form action="controllers/UserController.php" method="POST">
             <h1>Login</h1>
             <div class="input-box">
                 <input type="text" name="user" placeholder="Usuario" required>
