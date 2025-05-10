@@ -1,12 +1,64 @@
 <?php
-//Escribimos el codigo
 session_start();
 if (isset($_SESSION["usuario_sesion"])) {
     header("Location: views/dashboard.php");
 } else {
     
 }
+include_once __DIR__ . '/../models/conexion.php';
+
+$mensaje_error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $captcha = $_POST['g-recaptcha-response'];
+    $secretkey = "6LeHhDQrAAAAAB2TgBaDJP4oC4gb2Vj_VPLx6a5s";
+
+    $respuesta = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$captcha&remoteip=$ip");
+    $atributos = json_decode($respuesta, true);
+
+    if (!$atributos['success']) {
+        $mensaje_error = "⚠️ Por favor verifica el reCAPTCHA.";
+    } else {
+        $usuario = $_POST['user'];
+        $password = $_POST['pass'];
+
+        // Conectamos con el objeto de tu clase Conexion
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $conn = new mysqli(
+            $conexion->getServidor(),
+            $conexion->getUser(),
+            $conexion->getClave(),
+            $conexion->getDatabase()
+        );
+
+        // Preparar y ejecutar consulta segura
+        $sql = "SELECT * FROM tb_usuario WHERE usuario = ? AND password = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $usuario, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $datos = $result->fetch_assoc();
+            $_SESSION["usuario_sesion"] = [
+                "nombre" => $datos["nombre"],
+                "apellido" => $datos["apellido"],
+                "id_rol" => $datos["id_rol"]
+            ];
+            header("Location: views/dashboard.php");
+            exit;
+        } else {
+            $mensaje_error = "❌ Usuario o contraseña incorrectos.";
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +69,8 @@ if (isset($_SESSION["usuario_sesion"])) {
     <title>Login | CarWash SuperCar</title>
     <link rel="stylesheet" href="css/styleLogin.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+       <script src="html/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <style>
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
@@ -138,8 +192,14 @@ body {
     </style>
 </head>
 <body>
-    <div class="wrapper" >
-        <form action="controllers/UserController.php" method="POST">
+    <div class="wrapper">
+        <?php if (!empty($mensaje_error)) : ?>
+            <div style="color: yellow; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                <?php echo $mensaje_error; ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST">
             <h1>Login</h1>
             <div class="input-box">
                 <input type="text" name="user" placeholder="Usuario" required>
@@ -147,21 +207,18 @@ body {
             </div>
             <div class="input-box">
                 <input type="password" name="pass" placeholder="Contraseña" required>
-                <i class='bx bxs-lock-alt' ></i>
+                <i class='bx bxs-lock-alt'></i>
             </div>
 
             <div class="remember-forgot">
-                
-                <a href="">olvidade mi contraseña </a>
-           </div>
+                <a href="">¿Olvidaste tu contraseña?</a>
+            </div>
+            <div class="g-recaptcha" data-sitekey="6LeHhDQrAAAAAEweMk51gPdm2jlUSR4zYKWsDZjq"></div>
 
-           <button type="submit" class="btn"> Iniciar Secion </button>
-
-          
-           </div>
+            <button type="submit" class="btn">Iniciar Sesión</button>
         </form>
     </div>
-
 </body>
+
 
 </html>

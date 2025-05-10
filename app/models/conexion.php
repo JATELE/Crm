@@ -58,5 +58,8 @@ class Conexion{
     public function setDatabase($database){
         $this->database = $database;
     }
+    public function getConexion() {
+    return $this->conexion;
+}
 }
 
