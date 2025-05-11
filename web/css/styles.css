@@ -10,12 +10,11 @@ a {
 }
 
 .top-bar {
-    background-color: #00c291;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 14px;
+  background: #0a9c5e;
+  color: white;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
 }
 
 .logo {

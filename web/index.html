@@ -54,9 +54,9 @@
 
 <body>
     <!-- Barra superior -->
-    <header class="top-bar">
-        <p>🚚 ¡Envío gratuito a partir de S/. 150! 💬 WhatsApp: +51 906328260</p>
-    </header>
+    <div class="top-bar">
+    ¡🚚 ¡Envío gratuito a partir de S/. 150! 💬 WhatsApp: +51 906328260
+  </div>
     <!-- Navegación -->
      
     <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">
@@ -78,13 +78,11 @@
               <li class="nav-item mx-5"><a class="nav-link M11" href="promociones.html">Productos</a></li>
               <li class="nav-item mx-5"><a class="nav-link M11" href="#">Conócenos</a></li>
             </ul>
-          </div>
-      
-        
-          <div class="redes position-absolute top-50 end-0 translate-middle-y pe-3">
+           <div class="redes position-absolute top-50 end-0 translate-middle-y pe-3 justify-content-center" id="navbarContent">
             <a href="#"><i class="fa-brands fa-facebook"></i></a>
             <a href="#"><i class="fa-brands fa-twitter"></i></a>
             <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
+          </div>
           </div>
       
         </div>
@@ -141,19 +139,18 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Categorías en escritorio -->
-      <aside class="col-lg-3 d-none d-lg-block">
-        <div class="categories">
-          <h3>Nuestras Categorías</h3>
-          <ul class="list-unstyled">
-            <li><a href="#">VEGETALES</a></li>
-            <li class="active"><a href="#">ABARROTES</a></li>
-            <li><a href="#">PRODUCTOS DE ASEO PERSONAL</a></li>
-            <li><a href="#">MENESTRA</a></li>
-            <li><a href="#">LÁCTEOS Y EMBUTIDOS</a></li>
-            <li><a href="#">BEBIDAS</a></li>
-          </ul>
-        </div>
-      </aside>
+           <aside class="sidebar">
+            <h3>NUESTRAS 
+                CATEGORÍAS</h3>
+            <ul>
+                <li><a href="#">VEGETALES</a></li>
+                <li><a href="#">ABARROTES</a></li>
+                <li><a href="#">PRODUCTOS DE ASEO PERSONAL</a></li>
+                <li><a href="#">MENESTRAS</a></li>
+                <li><a href="#">LÁCTEOS Y EMBUTIDOS</a></li>
+                <li><a href="#"><strong>BEBIDAS</strong></a></li>
+            </ul>
+           </aside>
         <!-- Productos -->
         <section class="products" id="productos">
             <!-- Fila 1 -->
