@@ -2,10 +2,6 @@
 session_start();
 require_once("../models/Clientes.php");
 
-// Activar errores durante desarrollo
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 $objeto = new Clientes();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion'])) {
@@ -13,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion'])) {
 
     if ($accion === 'editar' && isset($_GET['dni'])) {
         $dni = $_GET['dni'];
-        header("Location: ../views/editar_cliente.php?dni=$dni");
+        header("Location: ../views/editar_clientes.php?dni=$dni");
         exit;
     }
 
@@ -32,6 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono = $_POST['telefono_c'];
     $direccion = $_POST['direccion_c'];
     $correo = $_POST['correo_c'];
+
+    if ($accion === 'actualizar') {
+        $dniOriginal = $_POST['dni_original'];
+        $objeto->actualizarCliente($dniOriginal, $dni, $nombre, $telefono, $direccion, $correo);
+        header("Location: ../views/listar_clientes.php");
+        exit;
+    }
+
 
     $errores = [];
 
@@ -65,20 +69,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Si hay errores, redirigir con mensajes
+ 
     if (!empty($errores)) {
         $_SESSION['errores_registro'] = $errores;
-        $_SESSION['datos_registro'] = $_POST;
 
         if ($accion === 'actualizar') {
-            header("Location: ../views/editar_cliente.php?dni=" . urlencode($_POST['dni_original']));
+            header("Location: ../views/editar_clientes.php?dni=" . urlencode($_POST['dni_original']));
         } else {
             header("Location: ../views/panel_clientes.php");
         }
         exit();
     }
 
-    // Ejecutar acción correspondiente
+
     if ($accion === 'registrar') {
         if ($objeto->registrar_cliente($dni, $nombre, $telefono, $direccion, $correo)) {
             unset($_SESSION['datos_registro']);
@@ -95,3 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+?>

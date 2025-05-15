@@ -1,4 +1,5 @@
-      <!-- Header -->
+
+
       <header class="main-header">
         <!-- Logo -->
         <a href="index2.html" class="logo">
@@ -142,10 +143,10 @@
                   </a>
                   <ul class="treeview-menu">
                     <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Sub Item 1</a>
+                      <a href="panel_clientes.php"><i class="fa fa-circle-o"></i> Registrar</a>
                     </li>
                     <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Sub Item 2</a>
+                      <a href="listar_clientes.php"><i class="fa fa-circle-o"></i> Reportes</a>
                     </li>
                   </ul>
                 </li>
@@ -201,10 +202,10 @@
                   </a>
                   <ul class="treeview-menu">
                     <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Sub Item 1</a>
+                      <a href="panel_clientes.php"><i class="fa fa-circle-o"></i> Registrar</a>
                     </li>
                     <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Sub Item 2</a>
+                      <a href="#"><i class="fa fa-circle-o"></i> Reportes</a>
                     </li>
                   </ul>
                 </li>
@@ -215,7 +216,6 @@
               <?php  
               }
               ?>
-
           </ul>
         </section>
         <!-- /.sidebar -->
