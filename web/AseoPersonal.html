@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abarrotes Yuly</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .categories ul li {
+            cursor: pointer;
+        }
+
+        .categories ul li a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .categories ul li a:hover {
+            color: #28a745;
+        }
+
+        .sidebar {
+            width: 20%;
+            min-width: 200px;
+            background-color: white;
+            padding: 20px;
+        }
+
+        .sidebar h3 {
+            color: #00794f;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            margin: 5px 0;
+            color: #00794f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Barra superior -->
+    <div class="top-bar">
+        ¡🚚 ¡Envío gratuito a partir de S/. 150! 💬 WhatsApp: +51 906328260
+    </div>
+    <!-- Navegación -->
+
+    <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">
+        <div class="container-fluid position-relative">
+            <form action=" ../app/index.php" method="post" class="d-flex">
+                <a class="navbar-brand" href=" ../app/index.php">
+                    <img class="logo"
+                        src="C:\Users\user\Downloads\trabajo_grupal\trabajo_grupal\img\ChatGPT Image 24 abr 2025, 00_08_50.png"
+                        alt="Logo" height="40">
+                </a>
+            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-5"><a class="nav-link M11"
+                            href="iniciotienda.html">Inicio</a>
+                    </li>
+                    <li class="nav-item mx-5"><a class="nav-link M11" href="index.html">Productos</a></li>
+                    <li class="nav-item mx-5"><a class="nav-link M11" href="#">Conócenos</a></li>
+                </ul>
+                <div class="redes position-absolute top-50 end-0 translate-middle-y pe-3 justify-content-center"
+                    id="navbarContent">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    </div>
+    </div>
+    </nav>
+<div class="navbar navbar-expand-lg border-bottom border-body py-4 px-3" style="background-color: #EDF8F6;">
+  <div class="container-fluid d-flex justify-content-end align-items-center flex-wrap gap-3">
+    <!-- Buscador -->
+    <div class="input-group" style="max-width: 300px;">
+      <input type="text" class="form-control" id="inputBusqueda" placeholder="Buscar productos..." aria-label="Buscar">
+      <button class="btn btn-outline-secondary" type="button" id="btnBuscar">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+
+    <!-- Filtro con estilo bootstrap pero funcionalidad original -->
+    <div class="dropdown filtro-container">
+      <button class="btn btn-outline-secondary dropdown-toggle filtro-btn" type="button" id="filtroDropdown"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        ☰ Ordenar por
+      </button>
+      <ul class="dropdown-menu opciones-filtro" aria-labelledby="filtroDropdown">
+        <li><a class="dropdown-item" href="#" data-order="asc">Precio más bajo</a></li>
+        <li><a class="dropdown-item" href="#" data-order="desc">Precio más alto</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Categorías SOLO móviles -->
+    <div class="d-block d-lg-none px-3 py-2" style="background-color: #EDF8F6;">
+        <button class="btn btn-outline-secondary w-100 d-flex justify-content-between align-items-center" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mobileCategories" aria-expanded="false">
+            Categorías
+            <i class="fa fa-chevron-down"></i>
+        </button>
+        <div class="collapse mt-2" id="mobileCategories">
+            <ul class="list-unstyled mb-0">
+                <li><a href="#">VEGETALES</a></li>
+                <li><a href="#">ABARROTES</a></li>
+                <li><a href="AseoPersonal.html">PRODUCTOS DE ASEO PERSONAL</a></li>
+                <li><a href="#">MENESTRA</a></li>
+                <li><a href="#">LÁCTEOS Y EMBUTIDOS</a></li>
+                <li><a href="index.html">BEBIDAS</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="main-content py-3" style="background-color: #EDF8F6;">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Categorías en escritorio -->
+                <aside class="sidebar">
+                    <h3>NUESTRAS
+                        CATEGORÍAS</h3>
+                    <ul>
+                        <li><a href="#">VEGETALES</a></li>
+                        <li><a href="#">ABARROTES</a></li>
+                        <li><a href="AseoPersonal.html">PRODUCTOS DE ASEO PERSONAL</a></li>
+                        <li><a href="#">MENESTRAS</a></li>
+                        <li><a href="#">LÁCTEOS Y EMBUTIDOS</a></li>
+                        <li><a href="index.html">BEBIDAS</a></li>
+                    </ul>
+                </aside>
+                <!-- Productos -->
+                <section class="products" id="productos">
+                    <!-- Fila 1 -->
+                    <div class="product">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThNXQAd6nHGiFAZXd1EgFM1A2mTxIEUoJ0Dg&s"
+                            alt="Tomates">
+                        <h4>SHAMPOO CAMAY 75ML</h4>
+                        <p>S/ 4.50</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://www.lagranbodega.com.pe/public/images/products/671873.jpg" alt="Arroz 1kg">
+                        <h4>JABON REXONA SAMSOO ALOE</h4>
+                        <p>S/ 3.20</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://deliverycajabamba.com/wp-content/uploads/2024/03/JABONCILLO-REXONA-MEN-ANTIBACTERIAL-ACTIVE-SPORTS-CONT.NETO-85-GR.jpg"
+                            alt="Shampoo Herbal">
+                        <h4>REXONA ACTIVE SPORTS</h4>
+                        <p>S/ 12.90</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://production-tailoy-repo-magento-statics.s3.amazonaws.com/imagenes/872x872/productos/i/j/a/jabon-neko-extra-suave-x-75-grs-14095-default-1.jpg"
+                            alt="Lentejas">
+                        <h4>JABON NEKO EXTRA SUAVE</h4>
+                        <p>S/ 5.00</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://triomcbo.com/wp-content/uploads/2022/05/C151-Jabon-Antibacterial-Rexona-120g.jpg"
+                            alt="Leche Gloria">
+                        <h4>REXONA LIMPIEZA PROFUNDA</h4>
+                        <p>S/ 4.00</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://www.lagranbodega.com.pe/public/images/products/841597.jpg" alt="Queso Fresco">
+                        <h4>JABON CAMAY ROSAS</h4>
+                        <p>S/ 15.00</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://oechsle.vteximg.com.br/arquivos/ids/7167227-1000-1000/image-c5382db6f7f949ec9b848812a766bc0d.jpg?v=637801314381330000"
+                            alt="Jamón de pavo">
+                        <h4>REXONA ANTIBACTERIAL</h4>
+                        <p>S/ 8.90</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://plazavea.vteximg.com.br/arquivos/ids/29522389-512-512/20146113.jpg"
+                            alt="Salchicha">
+                        <h4>JABON DOVE</h4>
+                        <p>S/ 6.50</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://www.palmolive.com.pe/content/dam/cp-sites/personal-care/palmolive-latam/redesign-2020/andina/pdp/aloe-y-oliva/palmolive-jabon-en-barra-aloe-y-oliva-front.jpg"
+                            alt="Jugo de naranja">
+                        <h4>PALMOLIVE NATURALS</h4>
+                        <p>S/ 7.00</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://barakibodegon.net/cdn/shop/files/unnamed_5daca39e-0a93-4d60-8331-f587a5c10981.jpg?v=1723828823"
+                            alt="Coca Cola 1.5L">
+                        <h4>PROTEX 3X1 ACTIVE SPORTS</h4>
+                        <p>S/ 5.90</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://vegaperu.vtexassets.com/arquivos/ids/157674/7708872634035.jpg?v=637630156647930000"
+                            alt="Papa blanca">
+                        <h4>MONCLER ENERGIA</h4>
+                        <p>S/ 2.80</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                    <div class="product">
+                        <img src="https://oechsle.vteximg.com.br/arquivos/ids/9074561-1000-1000/image-226e4cb4111b4d12bd282021609bd255.jpg?v=637903091491130000"
+                            alt="Detergente Bolívar">
+                        <h4>MONCLER REFRESH</h4>
+                        <p>S/ 9.50</p>
+                        <button>AÑADIR CARRITO</button>
+                    </div>
+                </section>
+</body>
+<script>
+  // Esperar que el DOM esté completamente cargado
+  document.addEventListener("DOMContentLoaded", () => {
+    const opciones = document.querySelectorAll(".opciones-filtro .dropdown-item");
+    const contenedor = document.getElementById("productos");
+
+    opciones.forEach(opcion => {
+      opcion.addEventListener("click", (e) => {
+        e.preventDefault();
+        const orden = opcion.getAttribute("data-order");
+        const productos = Array.from(contenedor.querySelectorAll(".product"));
+
+        productos.sort((a, b) => {
+          const precioA = parseFloat(a.querySelector("p").textContent.replace("S/", "").trim());
+          const precioB = parseFloat(b.querySelector("p").textContent.replace("S/", "").trim());
+
+          return orden === "asc" ? precioA - precioB : precioB - precioA;
+        });
+
+        // Reordenar productos en el DOM
+        productos.forEach(producto => contenedor.appendChild(producto));
+      });
+    });
+  });
+</script>
+
+
+<script>
+  const filtroContainer = document.querySelector('.filtro-container');
+  const filtroBtn = document.querySelector('.filtro-btn');
+
+  filtroBtn.addEventListener('click', () => {
+    filtroContainer.classList.toggle('active');
+  });
+</script>
+
+<!-- //BOTON DE BUSQUEDA -->
+
+<script>
+  const btnBuscar = document.getElementById('btnBuscar');
+  const inputBusqueda = document.getElementById('inputBusqueda');
+  const productos = document.querySelectorAll('.product');
+
+  btnBuscar.addEventListener('click', () => {
+    const texto = inputBusqueda.value.toLowerCase().trim();
+
+    productos.forEach(producto => {
+      const nombre = producto.querySelector('h4').textContent.toLowerCase();
+      if (nombre.includes(texto)) {
+        producto.style.display = 'block';
+      } else {
+        producto.style.display = 'none';
+      }
+    });
+  });
+
+  //Presionar Enter también activa la búsqueda
+  inputBusqueda.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      btnBuscar.click();
+    }
+  });
+</script>
+
+
+</html>
