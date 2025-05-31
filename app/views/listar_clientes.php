@@ -116,7 +116,7 @@ $conexion->cerrarConexion();
                         <a href="../controllers/ClienteController.php?accion=eliminar&dni=<?= $cliente['dni'] ?>"
                           class="btn btn-danger btn-sm"
                           onclick="return confirm('¿Estás seguro de eliminar este cliente?');">Eliminar</a>
-                        <<a href="#" class="btn btn-warning btn-sm btnEditarCliente" data-dni="<?= $cliente['dni'] ?>"
+                        <a href="#" class="btn btn-warning btn-sm btnEditarCliente" data-dni="<?= $cliente['dni'] ?>"
                           data-nombre="<?= $cliente['nombre'] ?>" data-telefono="<?= $cliente['telefono'] ?>"
                           data-direccion="<?= $cliente['direccion'] ?>" data-correo="<?= $cliente['correo'] ?>">
                           Editar

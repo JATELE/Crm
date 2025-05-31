@@ -9,11 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion'])) {
     $accion = $_GET['accion'];
 
     if ($accion === 'eliminar' && isset($_GET['id_usuario'])) {
-        $id = $_GET['id_usuario'];
-        $objeto->eliminar_usuario($id);
-        header("Location: ../views/editar_usuario.php");
-        exit;
+    $id = intval($_GET['id_usuario']); // aseguramos que sea numérico
+    if ($objeto->eliminarUsuario($id)) {
+        header("Location: ../views/panel_usuarios_reportes.php?msg=eliminado");
+    } else {
+        header("Location: ../views/panel_usuarios_reportes.php?msg=error");
     }
+    exit;
+}
+
 
     if ($accion === 'editar' && isset($_GET['id'])) {
         $id = $_GET['id'];

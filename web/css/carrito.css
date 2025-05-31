@@ -1,0 +1,62 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .formulario,
+    .resumen {
+      width: 48%;
+      margin: 1%;
+      box-sizing: border-box;
+    }
+
+    .formulario input,
+    .formulario select,
+    .formulario textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .resumen table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .resumen table,
+    .resumen th,
+    .resumen td {
+      border: 1px solid #000;
+    }
+
+    .resumen th,
+    .resumen td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    .metodo-pago {
+      margin-top: 20px;
+    }
+
+    .metodo-pago div {
+      margin-bottom: 10px;
+    }
+
+    .info-verde {
+      background-color: #00cc44;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .titulo {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+ 

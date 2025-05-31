@@ -40,5 +40,12 @@ class Productos {
         $sql = "SELECT * FROM productos WHERE id_producto = $id_producto";
         return $cn->getEjecutionQuery($sql);
     }
+    public function buscarPorCodigo($codigo) {
+    $cn = new conexion();
+    $cn->conectar();
+    $sql = "SELECT * FROM productos WHERE id_producto = $codigo";
+    return $cn->getEjecutionQuery($sql);
+}
+
 }
 ?>

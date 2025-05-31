@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion'])) {
 
     if ($accion === 'eliminar' && isset($_GET['dni'])) {
         $dni = $_GET['dni'];
-        $objeto->eliminarCliente($dni);
+        $objeto->eliminar_cliente_por_dni($dni);
         header("Location: ../views/listar_clientes.php");
         exit;
     }

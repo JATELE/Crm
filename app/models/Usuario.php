@@ -58,9 +58,11 @@ class Usuario{
 
     // ✅ Eliminar usuario
     public function eliminarUsuario($id_usuario) {
-        $sql = "DELETE FROM tb_usuario WHERE id_usuario = '$id_usuario'";
-        return $this->cn->setEjecutionQuery($sql);
-    }
+    $stmt = $this->cn->getConexion()->prepare("DELETE FROM tb_usuario WHERE id_usuario = ?");
+    $stmt->bind_param("i", $id_usuario);
+    return $stmt->execute();
+}
+
     public function existe_usuario($usuario)
 {
     $sql = "SELECT id_usuario FROM tb_usuario WHERE usuario = '$usuario'";

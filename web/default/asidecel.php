@@ -6,7 +6,7 @@
     </button>
     <div class="collapse mt-2" id="mobileCategories">
       <ul class="list-unstyled mb-0">
-        <li><a href="#">VEGETALES</a></li>
+        <li><a href="Vegetales.php">VEGETALES</a></li>
         <li><a href="Abarrotes.php">ABARROTES</a></li>
         <li><a href="AseoPersonal.php">PRODUCTOS DE ASEO PERSONAL</a></li>
         <li><a href="Menestras.php">MENESTRA</a></li>

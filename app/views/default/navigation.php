@@ -168,7 +168,7 @@
                     <a href="panel_productos_reportes.php"><i class="fa fa-circle-o"></i> Reportes </a>
                   </li>
                   <li>
-                    <a href="panel_productos_consultas.php"><i class="fa fa-circle-o"></i> Consultas </a>
+                    <a href="panel_productos_consulta.php"><i class="fa fa-circle-o"></i> Consultas </a>
                   </li>
                 </ul>
               </li>

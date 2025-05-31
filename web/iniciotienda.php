@@ -114,11 +114,11 @@
   <div class="carousel-categorias">
   <?php
   $categorias = [
-    ["img" => "img/abarrotes.png", "href" => "Abarrotes.html", "label" => "Ver Abarrotes"],
-    ["img" => "img/vegetales.png", "href" => "vegetales.html", "label" => "Ver Vegetales"],
-    ["img" => "img/cuidado.png", "href" => "AseoPersonal.html", "label" => "Ver Aseo Personal"],
-    ["img" => "img/ChatGPT Image 29 may 2025, 21_47_08.png", "href" => "Menestras.html", "label" => "Ver Menestras"],
-    ["img" => "img/ChatGPT Image 29 may 2025, 21_45_24.png", "href" => "vegetales.html", "label" => "Ver Lácteos y Embutidos"],
+    ["img" => "img/abarrotes.png", "href" => "Abarrotes.php", "label" => "Ver Abarrotes"],
+    ["img" => "img/vegetales.png", "href" => "Vegetales.php", "label" => "Ver Vegetales"],
+    ["img" => "img/cuidado.png", "href" => "AseoPersonal.php", "label" => "Ver Aseo Personal"],
+    ["img" => "img/ChatGPT Image 29 may 2025, 21_47_08.png", "href" => "Menestras.php", "label" => "Ver Menestras"],
+    ["img" => "img/ChatGPT Image 29 may 2025, 21_45_24.png", "href" => "Vegetales.php", "label" => "Ver Lácteos y Embutidos"],
     ["img" => "img/bedida.png", "href" => "index.html", "label" => "Ver Bebidas"]
   ];
   foreach ($categorias as $cat) {

@@ -16,9 +16,9 @@
       </div>
       <div class="footer-column">
         <h4>Políticas</h4>
-        <a href="#">Política de privacidad Web</a>
-        <a href="#">Cambios y devoluciones, T&C de la web y canales de atención</a>
-        <a href="#">Preguntas frecuentes</a>
+        <a href="PoliticaDePrivacidadWeb.php">Política de privacidad Web</a>
+        <a href="CambiosYDevoluciones.php">Cambios y devoluciones, T&C de la web y canales de atención</a>
+        <a href="PreguntasFrecuentes.php">Preguntas frecuentes</a>
       </div>
       <div class="footer-column">
         <h4>Atención al cliente</h4>
