@@ -23,7 +23,7 @@ if ($conexion->getConexion()->connect_error) {
   die("Error de conexión: " . $conexion->getConexion()->connect_error);
 }
 
-$sql = "SELECT * FROM clientes";
+$sql = "SELECT * FROM clientes2";
 $resultado = $conexion->getEjecutionQuery($sql);
 
 
@@ -48,7 +48,7 @@ foreach ($roles as $r) {
   }
 }
 
-$conexion->cerrarConexion();
+
 ?>
 
 
@@ -63,15 +63,17 @@ $conexion->cerrarConexion();
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
   <!-- Incluir una vez todos los links -->
   <?php include_once("default/links-head.php") ?>
+   <style>
+    .scroll-box {
+      max-height: 400px; /* Puedes ajustar esta altura */
+      overflow-y: auto;
+    }
+  </style>
 </head>
-
-
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
     <?php require_once("default/navigation.php") ?>
-
     <div class="content-wrapper">
-
       <section class="content-header">
         <h1>Clientes Registrados</h1>
         <ol class="breadcrumb">
@@ -79,54 +81,59 @@ $conexion->cerrarConexion();
           <li class="active">Clientes Registrados</li>
         </ol>
       </section>
-
-      <section class="content">
-        <div class="box">
-          <div class="box-header with-border">
+      <section class="content p-4">
+        <div class="box border border-primary rounded p-3">
+          <div class="box-header with-border mb-3">
             <h3 class="box-title">Clientes Registrados</h3>
           </div>
-          <div class="box-body table-responsive">
+          <div class="box-body table-responsive scroll-box">
             <?php if (count($clientes) > 0): ?>
               <table class="table table-bordered table-hover">
                 <thead class="bg-primary text-white">
                   <tr>
                     <th>DNI</th>
                     <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Dirección</th>
+                    <th>Apellido</th>
                     <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Lugar de Nacimiento</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Estado Civil</th>
+                    <th>Contraseña</th>
+                    <th>Puntos</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($clientes as $cliente): ?>
                     <tr>
-                      <td><?= htmlspecialchars($cliente['dni']) ?></td>
-                      <td><?= htmlspecialchars($cliente['nombre']) ?></td>
-                      <td><?= htmlspecialchars($cliente['telefono']) ?></td>
-                      <td><?= htmlspecialchars($cliente['direccion']) ?></td>
-                      <td><?= htmlspecialchars($cliente['correo']) ?></td>
+                      <td><?= htmlspecialchars($cliente['dni_cliente']) ?></td>
+                      <td><?= htmlspecialchars($cliente['nombres_cliente']) ?></td>
+                      <td><?= htmlspecialchars($cliente['apellidos_cliente']) ?></td>
+                      <td><?= htmlspecialchars($cliente['correo_cliente']) ?></td>
+                      <td><?= htmlspecialchars($cliente['telefono_cliente']) ?></td>
+                      <td><?= htmlspecialchars($cliente['lugar_nacimiento']) ?></td>
+                      <td><?= htmlspecialchars($cliente['fecha_nacimiento']) ?></td>
+                      <td><?= htmlspecialchars($cliente['estado_civil']) ?></td>
+                      <td><?= htmlspecialchars($cliente['password_cliente']) ?></td>
+                      <td><?= htmlspecialchars($cliente['puntos']) ?></td>
                       <td>
-
-
-
-
-
-
-                        <a href="../controllers/ClienteController.php?accion=eliminar&dni=<?= $cliente['dni'] ?>"
+                        <a href="../controllers/ClienteController.php?accion=eliminar&dni=<?= $cliente['dni_cliente'] ?>"
                           class="btn btn-danger btn-sm"
                           onclick="return confirm('¿Estás seguro de eliminar este cliente?');">Eliminar</a>
-                        <a href="#" class="btn btn-warning btn-sm btnEditarCliente" data-dni="<?= $cliente['dni'] ?>"
-                          data-nombre="<?= $cliente['nombre'] ?>" data-telefono="<?= $cliente['telefono'] ?>"
-                          data-direccion="<?= $cliente['direccion'] ?>" data-correo="<?= $cliente['correo'] ?>">
+                        <a href="#" class="btn btn-warning btn-sm btnEditarCliente" data-bs-toggle="modal"
+                          data-bs-target="#modalEditarCliente" data-dni="<?= $cliente['dni_cliente'] ?>"
+                          data-nombres="<?= $cliente['nombres_cliente'] ?>"
+                          data-apellidos="<?= $cliente['apellidos_cliente'] ?>"
+                          data-correo="<?= $cliente['correo_cliente'] ?>"
+                          data-telefono="<?= $cliente['telefono_cliente'] ?>"
+                          data-lugar="<?= $cliente['lugar_nacimiento'] ?>" data-fecha="<?= $cliente['fecha_nacimiento'] ?>"
+                          data-estado="<?= $cliente['estado_civil'] ?>">
                           Editar
-                          </a>
-
+                        </a>
                       </td>
                     </tr>
-
                   <?php endforeach; ?>
-
                 </tbody>
               </table>
             <?php else: ?>
@@ -135,55 +142,74 @@ $conexion->cerrarConexion();
           </div>
         </div>
       </section>
-      <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog">
+      <div class="modal fade" id="modalEditarCliente" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                  aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Modal Editar Cliente</h4>
-            </div>
-            <div class="modal-body text-left">
-              <!--  INICIO DE FORMULARIO -->
-              <form action="#" method="post">
-                <div class="mb-3">
-                  <label for="dni" class="form-label">DNI</label>
-                  <input type="text" disabled="true" readOnly class="form-control" id="dni" name="dni_c">
+          <form action="../controllers/ClienteController.php" method="POST">
+            <input type="hidden" name="accion" value="actualizar">
+            <input type="hidden" name="dni_original" id="dni_cliente">
+
+            <input type="hidden" name="dni_cliente" id="edit_dni">
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Editar Cliente</h5>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Nombres</label>
+                  <input type="text" class="form-control" name="nombre_c" id="nombres_cliente">
                 </div>
-                <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre_c">
+                <div class="form-group">
+                  <label>Apellidos</label>
+                  <input type="text" class="form-control" name="apellidos_c" id="apellidos_cliente">
                 </div>
-                <!-- CORREGIDO -->
-                <div class="mb-3">
-                  <label for="telefono" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="telefono" name="telefono_c">
+                <div class="form-group">
+                  <label>Correo</label>
+                  <input type="email" class="form-control" name="correo_c" id="correo_cliente">
                 </div>
-                <div class="mb-3">
-                  <label for="direccion" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="direccion" name="direccion_c">
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input type="text" class="form-control" name="telefono_c" id="telefono_cliente">
+                </div>
+                <div class="form-group">
+                  <label>Lugar de nacimiento</label>
+                  <input type="text" class="form-control" name="lugar_c" id="lugar_nacimiento">
+                </div>
+                <div class="form-group">
+                  <label>Fecha de nacimiento</label>
+                  <input type="date" class="form-control" name="fecha_c" id="lugar_nacimiento">
+                </div>
+                <div class="form-group">
+                  <label for="estado_c">Estado Civil</label>
+                  <select name="estado_c" id="estado_c" class="form-control">
+                    <option value="">Seleccione una opción</option>
+                    <option value="Soltero">Soltero</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Divorciado">Divorciado</option>
+                    <option value="Viudo">Viudo</option>
+                    <option value="Conviviente">Conviviente</option>
+                  </select>
+                  <?php if (isset($errores['estado_c'])): ?>
+                    <span class="text-danger"><?php echo $errores['estados_c']; ?></span>
+                  <?php endif; ?>
                 </div>
 
-                <div class="mb-4 mt-3">
-                  <label for="nombre" class="form-label">Correo electronico</label>
-                  <input type="email" class="form-control" id="email" name="correo_c">
-                </div>
-              </form>
-              <!--  FIN DE FORMULARIO-->
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-danger" id="btnEditarCliente">Confirmar</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+          </form>
+        </div>
+      </div>
+
+
     </div>
     <!-- Footer -->
     <?php require_once("default/footer.php"); ?>
   </div> <!-- FINAL DEL DIV DEL CONTENEDOR -->
   <!-- Todos los scripts -->
-   <script src="../views/assets/js/reportes_clientes.js"></script>
+  <script src="../views/assets/js/reportes_clientes.js"></script>
 
   <?php require_once("default/links-script.php"); ?>
 </body>

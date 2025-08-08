@@ -35,3 +35,25 @@
     <script src="html/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="html/dist/js/demo.js"></script>
+    <script>
+  $(document).on("click", ".btnEditarCliente", function () {
+  // Abrir modal
+  $("#modalEditarCliente").modal("show");
+
+  // Llenar campos del formulario
+  $("#dni_cliente").val($(this).data("dni"));
+  $("#nombres_cliente").val($(this).data("nombres"));
+  $("#apellidos_cliente").val($(this).data("apellidos"));
+  $("#correo_cliente").val($(this).data("correo"));
+  $("#telefono_cliente").val($(this).data("telefono"));
+  $("#lugar_nacimiento").val($(this).data("lugar"));
+  $("#fecha_nacimiento").val($(this).data("fecha"));
+  $("#estado_civil").val($(this).data("estado"));
+
+  // Cambiar texto y acción del formulario
+  $("#accion_cliente").val("editar");
+  $("#titulo_modal_cliente").text("Editar Cliente");
+  $("#btn_guardar_cliente").text("Actualizar");
+});
+
+</script>

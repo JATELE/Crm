@@ -57,18 +57,18 @@ a {
   }
   
   .nav a:hover {
-    color: rgb(75, 153, 92);
+    color: rgb(167, 126, 88);
   }
   
   
   .M11 {
     display: inline-block;
     font-size: 15px;
-    color: rgb(75, 153, 92);
+    color: rgb(167, 126, 88);
     text-decoration: none;
     position: relative;
     padding-bottom: 15px;
-    border-top: 4px solid rgb(75, 153, 92);
+    border-top: 4px solid rgb(167, 126, 88);
     margin-right: -8px;
   }
   
@@ -79,7 +79,7 @@ a {
   
 
 .M11:hover {
-    color: rgb(75, 153, 92);
+    color: rgb(167, 126, 88);
    
 }
 

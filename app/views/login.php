@@ -1,10 +1,16 @@
 <?php
 session_start();
-if (isset($_SESSION["usuario_sesion"])) {
-  header("Location: views/dashboard.php");
-} else {
 
+if (!empty($_SESSION["usuario_sesion"])) {
+  header("Location: views/dashboard.php");
+  exit;
 }
+
+if (!empty($_SESSION["cliente_sesion"])) {
+  header("Location: ../web/iniciotienda2.php");
+  exit;
+}
+
 include_once __DIR__ . '/../models/conexion.php';
 
 $mensaje_error = "";
@@ -32,15 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $conexion->getDatabase()
     );
 
-    // Preparar y ejecutar consulta segura
-    $sql = "SELECT * FROM tb_usuario WHERE usuario = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $usuario, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Primero verifica en tb_usuario
+    $sql1 = "SELECT * FROM tb_usuario WHERE usuario = ? AND password = ?";
+    $stmt1 = $conn->prepare($sql1);
+    $stmt1->bind_param("ss", $usuario, $password);
+    $stmt1->execute();
+    $result1 = $stmt1->get_result();
 
-    if ($result->num_rows === 1) {
-      $datos = $result->fetch_assoc();
+    if ($result1->num_rows === 1) {
+      $datos = $result1->fetch_assoc();
       $_SESSION["usuario_sesion"] = [
         "nombre" => $datos["nombre"],
         "apellido" => $datos["apellido"],
@@ -48,15 +54,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       ];
       header("Location: views/dashboard.php");
       exit;
+    }
+
+    $stmt1->close();
+
+    // Si no está en tb_usuario, busca en clientes2
+    $sql2 = "SELECT * FROM clientes2 WHERE (correo_cliente = ? OR dni_cliente = ?) AND password_cliente = ?";
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->bind_param("sss", $usuario, $usuario, $password);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+
+    if ($result2->num_rows === 1) {
+      $cliente = $result2->fetch_assoc();
+      $_SESSION["cliente_sesion"] = [
+        "dni" => $cliente["dni_cliente"],
+        "nombre" => $cliente["nombres_cliente"],
+        "apellido" => $cliente["apellidos_cliente"]
+      ];
+      header("Location: ../web/iniciotienda2.php");
+      exit;
     } else {
       $mensaje_error = "❌ Usuario o contraseña incorrectos.";
     }
 
-    $stmt->close();
+    $stmt2->close();
     $conn->close();
   }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoDY6rgyjYUvOJfW_RIVmUbQMdZ8nFl4feHw&s) no-repeat;
+      background: url(https://media.istockphoto.com/id/1176439818/es/foto/haciendo-un-recuerdo.jpg?s=612x612&w=0&k=20&c=xLTb_SUczMaZcpWBAOsFeleUvQwiAGC155LyIxoLsSY=) no-repeat;
       background-size: cover;
       background-position: center;
     }
@@ -208,6 +235,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <div class="remember-forgot">
         <a href="">¿Olvidaste tu contraseña?</a>
+      </div>
+      <div class="remember-forgot">
+        <a href="indexRegister.php">¿NO TIENES CUENTA?</a>
       </div>
       <div class="g-recaptcha" data-sitekey="6LeHhDQrAAAAAEweMk51gPdm2jlUSR4zYKWsDZjq"></div>
 

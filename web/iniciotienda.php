@@ -40,27 +40,28 @@
     }
 
     @media (max-width: 768px) {
-  .carousel-inner .carousel-item > .row {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
+      .carousel-inner .carousel-item>.row {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
 
-  .carousel-inner .carousel-item .col-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-    scroll-snap-align: center;
-  }
+      .carousel-inner .carousel-item .col-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        scroll-snap-align: center;
+      }
 
-  .carousel-control-prev,
-  .carousel-control-next {
-    display: none;
-  }
-  .categoria-slide {
-  padding: 15px;
-}
-}
+      .carousel-control-prev,
+      .carousel-control-next {
+        display: none;
+      }
+
+      .categoria-slide {
+        padding: 15px;
+      }
+    }
 
     .top-bar {
       background-color: #28a745;
@@ -75,11 +76,29 @@
 <body>
   <!-- Top bar -->
   <div class="top-bar">
-    🚚 ¡Envío gratuito a partir de S/. 150! 💬 WhatsApp: +51 906328260
+    🚚 Gana descuentos increibles con tus puntos
   </div>
 
-  <!-- Navegación -->
-  <?php require_once("default/navigation.php"); ?>
+  <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">
+    <div class="container-fluid position-relative">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
+        <ul class="navbar-nav">
+          <li class="nav-item mx-5"><a class="nav-link M11" href="iniciotienda.php">Inicio</a></li>
+          <li class="nav-item mx-5"><a class="nav-link M11" href="Abarrotes.php">Servicios</a></li>
+          <li class="nav-item mx-5"><a class="nav-link M11" href="Conocenos.php">Encuesta</a></li>
+        </ul>
+      </div>
+      <div class="redes position-absolute top-50 end-0 translate-middle-y pe-3">
+        <a class="nav-item mx-0" href="../app/index.php">Inicia sesión </a>
+        <a class="nav-item mx-0" href="../app/indexRegister.php">Registrate</a>
+      </div>
+
+    </div>
+  </nav>
 
   <!-- Carrusel principal con slick -->
   <div class="carrusel">
@@ -112,60 +131,55 @@
   </script>
 
   <div class="carousel-categorias">
-  <?php
-  $categorias = [
-    ["img" => "img/abarrotes.png", "href" => "Abarrotes.php", "label" => "Ver Abarrotes"],
-    ["img" => "img/vegetales.png", "href" => "Vegetales.php", "label" => "Ver Vegetales"],
-    ["img" => "img/cuidado.png", "href" => "AseoPersonal.php", "label" => "Ver Aseo Personal"],
-    ["img" => "img/ChatGPT Image 29 may 2025, 21_47_08.png", "href" => "Menestras.php", "label" => "Ver Menestras"],
-    ["img" => "img/ChatGPT Image 29 may 2025, 21_45_24.png", "href" => "Vegetales.php", "label" => "Ver Lácteos y Embutidos"],
-    ["img" => "img/bedida.png", "href" => "index.html", "label" => "Ver Bebidas"]
-  ];
-  foreach ($categorias as $cat) {
-    echo '
+    <?php
+    $categorias = [
+      ["img" => "img/abarrotes.png", "href" => "Abarrotes.php", "label" => "Ver Abarrotes"],
+      ["img" => "img/vegetales.png", "href" => "Vegetales.php", "label" => "Ver Vegetales"],
+      ["img" => "img/cuidado.png", "href" => "AseoPersonal.php", "label" => "Ver Aseo Personal"],
+      ["img" => "img/ChatGPT Image 29 may 2025, 21_47_08.png", "href" => "Menestras.php", "label" => "Ver Menestras"],
+      ["img" => "img/ChatGPT Image 29 may 2025, 21_45_24.png", "href" => "Vegetales.php", "label" => "Ver Lácteos y Embutidos"],
+      ["img" => "img/bedida.png", "href" => "index.html", "label" => "Ver Bebidas"]
+    ];
+    foreach ($categorias as $cat) {
+      echo '
     <div class="categoria-slide text-center p-3">
       <img src="' . $cat['img'] . '" class="rounded-circle shadow mx-auto" style="width: 150px; height: 150px;" alt="">
       <a href="' . $cat['href'] . '" class="btn btn-success mt-3 rounded-pill fw-bold d-block mx-auto" style="width: 160px;">' . $cat['label'] . '</a>
     </div>';
-  }
-  ?>
-</div>
+    }
+    ?>
+  </div>
   </div>
 
   <!-- Controles -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCategorias" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselCategorias" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
+ 
 
 
   <!-- Footer -->
   <?php require_once("default/footer.php"); ?>
   <script>
-  $(document).ready(function () {
-    $('.carousel-categorias').slick({
-      infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 3000,
-      arrows: true,
-      dots: true,
-      responsive: [
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 1,
-            arrows: false
+    $(document).ready(function () {
+      $('.carousel-categorias').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: true,
+        dots: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              arrows: false
+            }
           }
-        }
-      ]
+        ]
+      });
     });
-  });
-</script>
+  </script>
+  
 </body>
 
 </html>

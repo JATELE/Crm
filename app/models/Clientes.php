@@ -14,7 +14,7 @@ class Clientes
     // Verifica si un DNI ya existe
     public function existeDNI($dni)
     {
-        $sql = "SELECT * FROM clientes WHERE dni = '$dni'";
+        $sql = "SELECT * FROM clientes2 WHERE dni_cliente = '$dni'";
         $resultado = $this->cn->getEjecutionQuery($sql);
         return $resultado->num_rows > 0;
     }
@@ -22,7 +22,7 @@ class Clientes
 
     public function existeTelefono($telefono)
     {
-        $sql = "SELECT * FROM clientes WHERE telefono = '$telefono'";
+        $sql = "SELECT * FROM clientes2 WHERE telefono_cliente = '$telefono'";
         $resultado = $this->cn->getEjecutionQuery($sql);
         return $resultado->num_rows > 0;
     }
@@ -30,27 +30,50 @@ class Clientes
 
     public function existeCorreo($correo)
     {
-        $sql = "SELECT * FROM clientes WHERE correo = '$correo'";
+        $sql = "SELECT * FROM clientes2 WHERE correo_cliente = '$correo'";
         $resultado = $this->cn->getEjecutionQuery($sql);
         return $resultado->num_rows > 0;
     }
 
- 
-    public function registrar_cliente($dni, $nom, $tel, $dire, $correo)
+
+
+    public function registrar_cliente($dni, $nombres, $apellidos, $correo, $telefono, $lugar_nacimiento, $fecha_nacimiento, $estado_civil, $contraseña)
     {
-        $sql = "INSERT INTO clientes(dni, nombre, telefono, direccion, correo)
-                VALUES('$dni', '$nom', '$tel', '$dire', '$correo')";
-        return $this->cn->getEjecutionQuery($sql);
+        $cn = new conexion();
+        $cn->conectar();
+        $sql = "INSERT INTO clientes2 (
+    dni_cliente,
+    nombres_cliente,
+    apellidos_cliente,
+    correo_cliente,
+    telefono_cliente,
+    lugar_nacimiento,
+    fecha_nacimiento,
+    estado_civil,
+    password_cliente,
+    fecha_registro
+) VALUES (
+    '$dni',
+    '$nombres',
+    '$apellidos',
+    '$correo',
+    '$telefono',
+    '$lugar_nacimiento',
+    '$fecha_nacimiento',
+    '$estado_civil',
+    '$contraseña',
+    NOW()
+)";
+
+
+        return $cn->getEjecutionQuery($sql);
     }
-
-
-
 
 
 
     public function obtenerTodosLosClientes()
     {
-        $sql = "SELECT * FROM clientes";
+        $sql = "SELECT * FROM clientes2";
         $resultado = $this->cn->getEjecutionQuery($sql);
         $clientes = [];
 
@@ -62,47 +85,55 @@ class Clientes
 
         return $clientes;
     }
-    public function consultar_dni_cliente($dni){
+    public function consultar_dni_cliente($dni)
+    {
+        $cn = new conexion();
+        $cn->conectar();
+        $sql = "SELECT * FROM clientes2 WHERE dni_cliente = '$dni'";
+        return $cn->setEjecutionQuery($sql);
+    }
+
+    public function editar_cliente($dni, $nombres, $apellidos, $correo, $telefono, $lugar_nacimiento, $fecha_nacimiento, $estado_civil, $contraseña)
+    {
+        $cn = new conexion();
+        $cn->conectar();
+
+        $sql = "UPDATE clientes2 SET 
+                nombres_cliente = '$nombres',
+                apellidos_cliente = '$apellidos',
+                correo_cliente = '$correo',
+                telefono_cliente = '$telefono',
+                lugar_nacimiento = '$lugar_nacimiento',
+                fecha_nacimiento = '$fecha_nacimiento',
+                estado_civil = '$estado_civil',
+                password_cliente = '$contraseña'
+            WHERE dni_cliente = '$dni'";
+
+        return $cn->setEjecutionQuery($sql);
+    }
+
+
+    public function reportes_clientes()
+    {
         //Inicializamos la conexion.php
         $cn = new conexion();
         //Utilizamos la funcion o metodo conectar()
         $cn->conectar();
         //Comando para consultar la lista
-        $sql = "SELECT * FROM clientes WHERE dni = '$dni' ";
+        $sql = "SELECT * FROM clientes2";
         //Ejecutamos el comando
-         return $cn->setEjecutionQuery($sql);
+        return $cn->getEjecutionQuery($sql);
     }
-    public function editar_cliente($dni,$nombre,$telefono,$direccion,$correo){
-        //Inicializamos la conexion.php
+    public function eliminar_cliente_por_dni($dni)
+    {
+
         $cn = new conexion();
-        //Utilizamos la funcion o metodo conectar()
+
         $cn->conectar();
-        //Comando para consultar la lista
-        $sql = "UPDATE clientes 
-                SET nombre ='$nombre', telefono='$telefono', direccion='$direccion' , correo='$correo' 
-                WHERE dni = '$dni' ";
-        //Ejecutamos el comando
-         return $cn->setEjecutionQuery($sql);
-    }
-    public function reportes_clientes(){
-        //Inicializamos la conexion.php
-        $cn = new conexion();
-        //Utilizamos la funcion o metodo conectar()
-        $cn->conectar();
-        //Comando para consultar la lista
-        $sql = "SELECT * FROM clientes";
-        //Ejecutamos el comando
-         return $cn->getEjecutionQuery($sql);
-    }
-    public function eliminar_cliente_por_dni($dni){
-        
-        $cn = new conexion();
-       
-        $cn->conectar();
-       
-        $sql = "DELETE FROM clientes WHERE dni = '$dni' ";
-       
-         return $cn->setEjecutionQuery($sql);
+
+        $sql = "DELETE FROM clientes2 WHERE dni_cliente = '$dni' ";
+
+        return $cn->setEjecutionQuery($sql);
     }
 }
 ?>

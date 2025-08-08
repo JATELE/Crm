@@ -1,0 +1,124 @@
+
+create database crm2;
+use crm2;
+CREATE TABLE tb_rol ( -- listo 
+
+  id_rol INT AUTO_INCREMENT PRIMARY KEY,
+
+  nombre_rol VARCHAR(20) NOT NULL UNIQUE
+
+) ENGINE=InnoDB;
+INSERT INTO tb_rol (nombre_rol) VALUES 
+
+('DueÃ±os'), 
+
+('Gerente');
+
+
+create table tb_usuario (-- listo 
+    id_usuario int auto_increment primary key,
+    nombre varchar(50) not null,
+    apellido varchar(50) not null,
+    usuario varchar(20) not null unique,
+    password varchar(255) not null,
+    telefono varchar(15) not null,
+    id_rol int not null,
+    estado tinyint(1) not null default 1,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp on update current_timestamp,
+    foreign key (id_rol) references tb_rol(id_rol) on delete restrict on update cascade
+) engine=innodb;
+
+INSERT INTO tb_usuario (nombre, apellido, usuario, password, telefono, id_rol, estado) VALUES 
+
+('andres', 'Ramirez', 'DueÃ±o', '1234', '987654321', 1, 1), 
+
+('MarÃ­a', 'GÃ³mez', 'Gerente', '1234', '912345678', 2, 1);
+
+create table clientes2 (-- listo 
+    dni_cliente varchar(20) primary key,
+    nombres_cliente varchar(100),
+    apellidos_cliente varchar(100),
+    correo_cliente varchar(100),
+    telefono_cliente varchar(20),
+    lugar_nacimiento varchar(100),
+    fecha_nacimiento varchar(100),
+    estado_civil varchar(100)
+ 
+);
+ALTER TABLE clientes2
+ADD COLUMN fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+create table deseo2 (
+    id_deseo int primary key auto_increment,
+    dni_cliente varchar(20), -- puede ser null para deseos generales
+    destino varchar(100),
+    peso_indicador decimal(5,2),
+    presupuesto_estimado decimal(10,2),
+    tiempo_estimado varchar(50),
+    foreign key (dni_cliente) references clientes2(dni_cliente)
+);
+create table experiencia2 (
+    id_experiencia int primary key auto_increment,
+    dni_cliente varchar(20),
+    bien_adquirido varchar(100),
+    calificacion int,
+    rango_costo varchar(50),
+    lugar varchar(100),
+    descripcion text,
+    tipo_de_viaje varchar(50),
+    fecha_visita date,
+    foreign key (dni_cliente) references clientes2(dni_cliente)
+);
+create table campaÃ±a2 (-- listo 
+    id_campaÃ±a int primary key auto_increment,
+    nombre_campaÃ±a varchar(100),
+    descripcion text,
+    fecha_inicio date,
+    fecha_fin date
+);
+select * from encuestas2;
+
+UPDATE encuestas2 SET puntos_encuesta = 10 WHERE id_encuesta = 4;
+create table encuestas2 (-- listo 
+    id_encuesta int primary key auto_increment,
+    id_campaÃ±a int,
+    nombre_encuesta varchar(100),
+    descripcion text,
+    fecha_creacion date,
+    foreign key (id_campaÃ±a) references campaÃ±a2(id_campaÃ±a)
+);
+select * from preguntas2;
+create table preguntas2 (-- listo 
+    id_pregunta int primary key auto_increment,
+    pregunta varchar(200)
+);
+select * from encuesta_pregunta2;
+create table encuesta_pregunta2 (-- listo 
+    id_encuesta int,
+    id_pregunta int,
+    primary key (id_encuesta, id_pregunta),
+    foreign key (id_encuesta) references encuestas2(id_encuesta),
+    foreign key (id_pregunta) references preguntas2(id_pregunta)
+);
+select * from respuestas2;
+create table respuestas2 (
+    id_respuesta int primary key auto_increment,
+    id_encuesta int,
+    id_pregunta int,
+    dni_cliente varchar(20),
+    respuesta varchar(200),
+    fecha_respuesta date,
+    foreign key (id_encuesta) references encuestas2(id_encuesta),
+    foreign key (id_pregunta) references preguntas2(id_pregunta),
+    foreign key (dni_cliente) references clientes2(dni_cliente)
+);
+
+create table interacciones2 (
+    id_interaccion int primary key auto_increment,
+    dni_cliente varchar(20),
+    fecha date,
+    canal varchar(50),
+    descripcion text,
+    foreign key (dni_cliente) references clientes2(dni_cliente)
+);
