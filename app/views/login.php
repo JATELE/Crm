@@ -7,7 +7,7 @@ if (!empty($_SESSION["usuario_sesion"])) {
 }
 
 if (!empty($_SESSION["cliente_sesion"])) {
-  header("Location: ../web/iniciotienda2.php");
+  header("Location: ../web/Encuestasinkarian.php");
   exit;
 }
 
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "nombre" => $cliente["nombres_cliente"],
         "apellido" => $cliente["apellidos_cliente"]
       ];
-      header("Location: ../web/iniciotienda2.php");
+      header("Location: ../web/EncuestasInkarian.php");
       exit;
     } else {
       $mensaje_error = "❌ Usuario o contraseña incorrectos.";
@@ -237,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="">¿Olvidaste tu contraseña?</a>
       </div>
       <div class="remember-forgot">
-        <a href="indexRegister.php">¿NO TIENES CUENTA?</a>
+        <a href="../web/InicioEncuestasInkarian.php">¿NO TIENES CUENTA?</a>
       </div>
       <div class="g-recaptcha" data-sitekey="6LeHhDQrAAAAAEweMk51gPdm2jlUSR4zYKWsDZjq"></div>
 

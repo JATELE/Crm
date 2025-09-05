@@ -1,105 +1,10 @@
 <?php
-session_start();
-
-if (!isset($_SESSION["cliente_sesion"])) {
+require_once("default/auth.php");
+if (!$logueado) {
     header("Location: ../index.php");
     exit;
 }
 
-$nombre = $_SESSION["cliente_sesion"]["nombre"];
-$apellido = $_SESSION["cliente_sesion"]["apellido"];
-$dni_cliente = $_SESSION["cliente_sesion"]["dni"];
-
-require_once "../app/models/conexion.php";
-$con = new Conexion();
-$con->conectar();
-$conn = $con->getConexion();
-
-// Obtener puntos actuales del cliente
-$stmt = $conn->prepare("SELECT puntos FROM clientes2 WHERE dni_cliente = ?");
-$stmt->bind_param("s", $dni_cliente);
-$stmt->execute();
-$stmt->bind_result($puntos_cliente);
-$stmt->fetch();
-$stmt->close();
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
-    $id_encuesta = intval($_POST["id_encuesta"]);
-    $fecha = date("Y-m-d");
-
-    // Verificar si el cliente ya respondió esta encuesta
-    $stmt = $conn->prepare("SELECT 1 FROM respuestas2 WHERE dni_cliente = ? AND id_encuesta = ? LIMIT 1");
-    $stmt->bind_param("si", $dni_cliente, $id_encuesta);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        echo "<script>alert('Ya has respondido esta encuesta.'); window.location.href='encuentas.php';</script>";
-        exit;
-    }
-    $stmt->close();
-
-    // Guardar respuestas
-    if (isset($_POST["respuestas"]) && is_array($_POST["respuestas"])) {
-        foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
-            $respuesta = trim($respuesta);
-            if ($respuesta !== "") {
-                $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) 
-                                        VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
-                $stmt->execute();
-            }
-        }
-    }
-
-    // Obtener los puntos que vale la encuesta
-    $stmt = $conn->prepare("SELECT puntos_encuesta FROM encuestas2 WHERE id_encuesta = ?");
-    $stmt->bind_param("i", $id_encuesta);
-    $stmt->execute();
-    $stmt->bind_result($puntos_encuesta);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Sumar los puntos al cliente
-    $stmt = $conn->prepare("UPDATE clientes2 SET puntos = puntos + ? WHERE dni_cliente = ?");
-    $stmt->bind_param("is", $puntos_encuesta, $dni_cliente);
-    $stmt->execute();
-    $stmt->close();
-
-    echo "<script>alert('¡Gracias por responder la encuesta!'); window.location.href='encuentas.php';</script>";
-    exit;
-}
-
-// Obtener encuestas NO respondidas por el cliente
-$encuestas = [];
-$sql_encuestas = "
-    SELECT * FROM encuestas2
-    WHERE id_encuesta NOT IN (
-        SELECT DISTINCT id_encuesta
-        FROM respuestas2
-        WHERE dni_cliente = '$dni_cliente'
-    )
-";
-$result_encuestas = $conn->query($sql_encuestas);
-
-if ($result_encuestas && $result_encuestas->num_rows > 0) {
-    while ($encuesta = $result_encuestas->fetch_assoc()) {
-        $id_encuesta = $encuesta["id_encuesta"];
-        $sql_preguntas = "
-            SELECT p.id_pregunta, p.pregunta 
-            FROM preguntas2 p
-            JOIN encuesta_pregunta2 ep ON p.id_pregunta = ep.id_pregunta
-            WHERE ep.id_encuesta = $id_encuesta
-        ";
-        $result_preguntas = $conn->query($sql_preguntas);
-        $preguntas = [];
-        while ($row = $result_preguntas->fetch_assoc()) {
-            $preguntas[] = $row;
-        }
-        $encuesta["preguntas"] = $preguntas;
-        $encuestas[] = $encuesta;
-    }
-}
 ?>
 
 
@@ -188,11 +93,111 @@ if ($result_encuestas && $result_encuestas->num_rows > 0) {
         }
 
         .top-bar {
-            background-color: #28a745;
+            background-color: #f89406;
             color: white;
             text-align: center;
             padding: 8px 0;
             font-weight: bold;
+        }
+
+        /* Footer general */
+        #main-footer .footer-widget img {
+            width: 15px;
+            /* cambia el tamaño */
+            height: auto;
+            /* mantiene la proporción */
+        }
+
+        #main-footer {
+            background-color: #222;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Contenedor de columnas */
+        #footer-widgets {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* Cada columna */
+        .footer-widget {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Títulos */
+        .footer-widget .title {
+            color: #ff6600;
+            /* naranja */
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* Listas */
+        .footer-widget ul {
+            list-style: disc;
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .footer-widget ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-widget ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-widget ul li a:hover {
+            color: #ff6600;
+            /* hover en naranja */
+        }
+
+        /* Contacto */
+        .footer-widget p,
+        .footer-widget a {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        /* Botones */
+        .wp-block-button__link {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .wp-block-button__link:hover {
+            background: #ff6600;
+            border-color: #ff6600;
+            color: #fff;
+        }
+
+        /* Footer inferior */
+        #footer-bottom {
+            border-top: 1px solid #444;
+            margin-top: 30px;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .et_pb_column .et_pb_blurb .et-pb-icon {
+            font-size: 4px !important;
+            /* Cambia el 24px al tamaño que prefieras */
         }
     </style>
 </head>
@@ -201,38 +206,77 @@ if ($result_encuestas && $result_encuestas->num_rows > 0) {
     <div class="top-bar">
         🚚 Gana descuentos increíbles con tus puntos
     </div>
+
     <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">
         <div class="container-fluid position-relative">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Menú principal -->
             <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item mx-5"><a class="nav-link M11" href="iniciotienda2.php">Inicio</a></li>
+                    <li class="nav-item mx-5"><a class="nav-link M11" href="EncuestasInkarian.php">Inicio</a></li>
                     <li class="nav-item mx-5"><a class="nav-link M11" href="servicios.php">Servicios</a></li>
-                    <li class="nav-item mx-5"><a class="nav-link M11" href="encuestas.php">Encuesta</a></li>
+                    <li class="nav-item mx-5"><a class="nav-link M11" href="encuentas.php">Encuestas</a></li>
                 </ul>
             </div>
-            <div class="redes position-absolute top-50 end 0 translate-middle-y pe-3">
-                <a class="nav-item mx-0">logo</a>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-button">👤 Mi cuenta</button>
-                <div class="dropdown-content">
-                    <a href="#">Perfil</a>
-                    <a href="#">Puntos: <?= htmlspecialchars($puntos_cliente) ?></a>
-                    <a href="../app/controllers/cerrar_sesion.php">Cerrar sesión</a>
-                </div>
+
+            <!-- Logo -->
+            <div class="redes position-absolute top-50 end+110 translate-middle-y pe-3">
+                <img src="https://inkarian.com/wp-content/uploads/2023/03/Logo-web512x512.png"
+                    class="img-fluid rounded-circle" alt="Logo Inkrian" style="width: 150px; height: 80px;">
             </div>
 
+            <!-- Usuario -->
+            <div class="position-absolute top-50 end-0 translate-middle-y pe-3 d-flex align-items-center">
+                <?php if ($logueado): ?>
+                    <!-- Dropdown de usuario -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            👋 Hola, <?= htmlspecialchars($nombre) ?>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><a class="dropdown-item" href="#">Puntos: <?= htmlspecialchars($puntos_cliente ?? 0) ?></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="../app/controllers/cerrar_sesion.php">Cerrar
+                                    sesión</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <!-- Botones si no está logueado -->
+                    <a href="../app/index.php" class="btn btn-outline-primary btn-sm me-2">Inicia sesión</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro"
+                        class="btn btn-success btn-sm">Regístrate</a>
+                <?php endif; ?>
+            </div>
         </div>
     </nav>
+
     <div class="container my-5">
         <h2 class="mb-4 text-center">Encuestas Disponibles</h2>
         <?php if (empty($encuestas)): ?>
-            <div class="alert alert-info text-center">
-                ¡Ya respondiste todas las encuestas disponibles!
+            <div class="container my-5">
+                <div class="no-surveys-card text-center p-5 mx-auto"
+                    style="max-width: 600px; border-radius: 25px; background: linear-gradient(135deg, #e0f7fa, #b2ebf2); box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s;">
+
+                    <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
+
+                    <h3 class="fw-bold mb-3" style="color: #00796b;">¡Excelente!</h3>
+
+                    <p class="lead mb-4" style="color: #004d40; line-height: 1.6;">
+                        Has respondido todas las encuestas disponibles.<br>
+                        Gracias por tu participación y por ayudarnos a mejorar nuestros servicios. 🌟
+                    </p>
+
+                    <span style="font-size: 2rem;">💬</span>
+                </div>
             </div>
         <?php endif; ?>
         <div class="row">
@@ -268,5 +312,6 @@ if ($result_encuestas && $result_encuestas->num_rows > 0) {
         </div>
     </div>
 </body>
+<?php require_once("default/footer.php"); ?>
 
 </html>

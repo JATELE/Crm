@@ -122,3 +122,11 @@ create table interacciones2 (
     descripcion text,
     foreign key (dni_cliente) references clientes2(dni_cliente)
 );
+CREATE TABLE promociones2 (
+    id_promocion INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion TEXT NOT NULL, -- Aquí escribes todo el mensaje libremente
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO promociones2 (descripcion) VALUES 
+('🎉 ¡Feliz San Valentín! ❤️ Disfruta de un 20% de descuento en paquetes románticos a Cusco del 10 al 15 de febrero. Reserva ya y sorprende a tu pareja 💕');
+

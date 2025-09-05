@@ -28,12 +28,12 @@ if (isset($_SESSION["usuario_sesion"])) {
     max-height: 200px;
     overflow-y: auto;
   }
-  .center-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
 
+  .center-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
 </style>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -50,47 +50,47 @@ if (isset($_SESSION["usuario_sesion"])) {
           <li class="active">Registro Campaña</li>
         </ol>
       </section>
-      <!-- Main content -->
-      <section class="content">
-  <div class="center-wrapper d-flex justify-content-center">
-    <div class="col-md-6">
-      <div class="box box-primary p-4">
-        <div class="box-header with-border text-center mb-3">
-          <h3 class="box-title">Registrar Campaña</h3>
-        </div>
-        <form action="../controllers/CampañaRegistrarController.php" method="post">
-  <div class="box-body">
-    <div class="form-group mb-3">
-      <label for="nombre_campaña">Nombre de la Campaña</label>
-      <input type="text" class="form-control" id="nombre_campaña" name="nombre_campaña" required>
-    </div>
-    <div class="form-group mb-3">
-      <label for="descripcion">description</label>
-      <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-    </div>
-    <div class="form-group mb-3">
-      <label for="fecha_inicio">Fecha de inicio</label>
-      <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
-    </div>
-    <div class="form-group mb-3">
-      <label for="fecha_fin">Fecha de fin</label>
-      <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
-    </div>
-  </div>
-  <div class="box-footer text-center">
-    <button type="submit" class="btn btn-primary">
-      <i class="fa fa-save"></i> Registrar
-    </button>
-    <button type="reset" class="btn btn-default">
-      <i class="fa fa-eraser"></i> Limpiar
-    </button>
-  </div>
-</form>
 
-      </div>
-    </div>
-  </div>
-</section>
+      <section class="content">
+        <div class="center-wrapper d-flex justify-content-center">
+          <div class="col-md-6">
+            <div class="box box-primary p-4">
+              <div class="box-header with-border text-center mb-3">
+                <h3 class="box-title">Registrar Campaña</h3>
+              </div>
+              <form action="../controllers/CampañaRegistrarController.php" method="post">
+                <div class="box-body">
+                  <div class="form-group mb-3">
+                    <label for="nombre_campaña">Nombre de la Campaña</label>
+                    <input type="text" class="form-control" id="nombre_campaña" name="nombre_campaña" required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="descripcion">description</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="fecha_inicio">Fecha de inicio</label>
+                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="fecha_fin">Fecha de fin</label>
+                    <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+                  </div>
+                </div>
+                <div class="box-footer text-center">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Registrar
+                  </button>
+                  <button type="reset" class="btn btn-default">
+                    <i class="fa fa-eraser"></i> Limpiar
+                  </button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </section>
 
 
 

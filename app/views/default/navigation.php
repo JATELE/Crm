@@ -161,6 +161,9 @@
             <li>
               <a href="panel_campaña_reportes.php"><i class="fa fa-circle-o"></i> Reportes </a>
             </li>
+            <li>
+              <a href="panel_promociones.php"><i class="fa fa-circle-o"></i> Promociones </a>
+            </li>
           </ul>
         </li>
                 <li class="treeview">

@@ -23,7 +23,8 @@ class Conexion {
     }
 
     // Función para conectar con validación de errores
-    public function conectar() {
+public function conectar() {
+    if (!$this->conexion) {
         $this->conexion = new mysqli($this->servidor, $this->user, $this->clave, $this->database);
 
         // Validación de conexión
@@ -31,6 +32,9 @@ class Conexion {
             die("❌ Error de conexión: " . $this->conexion->connect_error);
         }
     }
+    return $this->conexion; // 🔥 devolvemos la conexión
+}
+
 
     // Función para cerrar la conexión
     public function cerrarConexion() {

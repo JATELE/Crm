@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once("../models/Clientes.php");
 
 $objeto = new Clientes();
@@ -31,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contraseña = $_POST['contraseña'];
 
     $errores = [];
+    $_SESSION['datos_registro'] = $_POST; // guardar temporalmente los datos
 
     // Validaciones si se va a registrar
     if ($accion === 'registrar' || $accion === 'registrarte') {
@@ -45,17 +48,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Si hay errores, redirigir con errores
+    // Si hay errores
     if (!empty($errores)) {
         $_SESSION['errores_registro'] = $errores;
+
         if ($accion === 'actualizar') {
             header("Location: ../views/editar_clientes.php?dni=" . urlencode($_POST['dni_original']));
         } elseif ($accion === 'registrarte') {
-            header("Location: ../indexRegister.php");
+            header("Location: ../../web/InicioEncuestasInkarian.php?showModal=1");
         } else {
             header("Location: ../views/panel_clientes.php");
         }
-        exit();
+        exit;
     }
 
     // Actualizar
@@ -77,12 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Registrar desde indexRegister
+    // Registrar desde inicio
     if ($accion === 'registrarte') {
         if ($objeto->registrar_cliente($dni, $nombres, $apellidos, $correo, $telefono, $lugar_nacimiento, $fecha_nacimiento, $estado_civil, $contraseña)) {
             unset($_SESSION['datos_registro']);
+            $_SESSION['success_registro'] = "¡Te registraste con éxito!";
         }
-        header("Location: ../../web/iniciotienda.php");
+        header("Location: ../../web/InicioEncuestasInkarian.php");
         exit;
     }
 }

@@ -1,41 +1,5 @@
-<footer>
-    <div class="footer-container">
-      <div class="footer-column">
-        <h4>Nuestra cultura</h4>
-        <a href="culturaValores.php">Cultura y valores</a>
-        <a href="TrabajaConNosotros.php">Trabaja con nosotros</a>
-      </div>
-      <div class="footer-column">
-        <h4>Sobre nosotros</h4>
-        <a href="NuestraCompania.php">Nuestra compañía</a>
-        <a href="LineaYEtica.php">Línea y ética</a>
-      </div>
-      <div class="footer-column">
-        <h4>Compras</h4>
-        <a href="PedidosWeb.php">Pedidos por la Web</a>
-      </div>
-      <div class="footer-column">
-        <h4>Políticas</h4>
-        <a href="PoliticaDePrivacidadWeb.php">Política de privacidad Web</a>
-        <a href="CambiosYDevoluciones.php">Cambios y devoluciones, T&C de la web y canales de atención</a>
-        <a href="PreguntasFrecuentes.php">Preguntas frecuentes</a>
-      </div>
-      <div class="footer-column">
-        <h4>Atención al cliente</h4>
-        <a href="TelefonoProvincia.php">Teléfono provincia: (COD)779-009</a>
-        <a href="comprobanteElectronico.php">Comprobantes electrónicos</a>
-      </div>
-    </div>
 
-    <div class="footer-bottom">
-      <div class="footer-icons">
-        <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
-        <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
-      </div>
-      <p>© 2025 Bodega July Company. All rights reserved</p>
-      <div class="footer-logos">
-        <a href="#"><img src="img/libro.png" alt="Libro de reclamaciones" /></a>
-      </div>
+    <footer id="main-footer"> <div class="container"> <div id="footer-widgets" class="clearfix"> <div class="footer-widget"> <div id="pages-2" class="fwidget et_pb_widget widget_pages"> <h4 class="title">Ucayali</h4> <ul> <li class="page_item page-item-3728"><a href="https://inkarian.com/blog-pucallpa/">Blog Pucallpa</a></li> <li class="page_item page-item-3119"><a href="https://inkarian.com/destinos/">Destinos</a></li> <li class="page_item page-item-1774"><a href="https://inkarian.com/hoteles/">Hoteles</a></li> <li class="page_item page-item-2582"><a href="https://inkarian.com/restaurantes/">Restaurantes</a></li> <li class="page_item page-item-2885"><a href="https://inkarian.com/tienda-online/">Tienda Online</a></li> </ul> </div> <!-- end .fwidget --> <div id="block-9" class="fwidget et_pb_widget widget_block"> <div class="wp-block-buttons is-layout-flex wp-container-core-buttons-is-layout-a74382ec wp-block-buttons-is-layout-flex"> <div class="wp-block-button is-style-outline is-style-outline--1"><a class="wp-block-button__link wp-element-button" href="https://forms.gle/wrkxppSgPqJnWzT19" target="_blank" rel="noreferrer noopener">Libro de Reclamación</a></div> </div> </div> <!-- end .fwidget --> </div> <!-- end .footer-widget --> <div class="footer-widget"> <div id="pages-5" class="fwidget et_pb_widget widget_pages"> <h4 class="title">Información al cliente</h4> <ul> <li class="page_item page-item-3728"><a href="https://inkarian.com/blog-pucallpa/">Blog Pucallpa</a></li> <li class="page_item page-item-2161"><a href="https://inkarian.com/directorio-para-emergencias/">Directorio para emergencias</a></li> <li class="page_item page-item-1968"><a href="https://inkarian.com/politica-de-privacidad/">Política de privacidad</a></li> <li class="page_item page-item-1379"><a href="https://inkarian.com/reembolso_devoluciones/">Política de protección de datos personales</a></li> <li class="page_item page-item-2"><a href="https://inkarian.com/politicas-del-reservas/">Políticas del Reservas</a></li> <li class="page_item page-item-2885"><a href="https://inkarian.com/tienda-online/">Tienda Online</a></li> </ul> </div> <!-- end .fwidget --> </div> <!-- end .footer-widget --> <div class="footer-widget"> <div id="text-2" class="fwidget et_pb_widget widget_text"> <h4 class="title">Contacto</h4> <div class="textwidget"> <p><img decoding="async" src="https://legalservices.cl/wp-content/uploads/2019/11/iconfinder_phone_326545.png" width="12px">&nbsp; (51) 961649549<br> <img decoding="async" src="https://legalservices.cl/wp-content/uploads/2019/11/iconfinder_aiga_mail_134146.png" width="16px"> booking@inkarian.com<br> <img decoding="async" src="https://legalservices.cl/wp-content/uploads/2019/09/icon-ubicometro.png" width="16px"> Av. Saenz Peña N°572 Pucallpa<br> <strong>Ucayali – Perú.</strong> </p> <p><a href="https://www.google.com/maps/place/Inkarian/@-8.3779725,-74.5357218,20z/data=!4m6!3m5!1s0x91a3bd733a861f6b:0x59d40342e3d965d6!8m2!3d-8.3779725!4d-74.5354983!16s%2Fg%2F11gmtph4fj" target="_blank" rel="noopener">Ir a Google Maps</a></p> </div> </div> <!-- end .fwidget --> </div> <!-- end .footer-widget --> <div class="footer-widget"> <div id="text-3" class="fwidget et_pb_widget widget_text"> <h4 class="title">Redes Sociales</h4> <div class="textwidget"> <p><a href="https://www.facebook.com/Inkarian.Peru" target="_blank" rel="noopener noreferrer"><img loading="lazy" decoding="async" class="alignnone" src="https://legalservices.cl/wp-content/uploads/2019/10/facebook.png" alt="" width="48" height="48"></a> <a href="https://www.instagram.com/inkariantours/" target="_blank" rel="noopener noreferrer"><img loading="lazy" decoding="async" class="alignnone" src="https://creaconstructora.cl/wp-content/uploads/2019/11/Instagram.png" alt="" width="48" height="48"></a> <a href="https://www.youtube.com/channel/UCcOO6qXQagWUGox8n8j41Dw" target="_blank" rel="noopener noreferrer"><img loading="lazy" decoding="async" class="alignnone" src="https://creaconstructora.cl/wp-content/uploads/2019/11/youtube-variation.png" alt="" width="48" height="48"></a></p> </div> </div> <!-- end .fwidget --> <div id="block-12" class="fwidget et_pb_widget widget_block"> <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex"> <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://forms.gle/jkUQSynWUxzuF1AJ8" target="_blank" rel="noreferrer noopener">Encuesta Viajero</a></div> <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://www.notion.so/6e997632cde24ac0b16dd86cb2286225?v=af87d259917946fbafd9a28a9e8cddf3&amp;pvs=4" target="_blank" rel="noreferrer noopener">Registro Viajero</a></div> </div> </div> <!-- end .fwidget --> </div> <!-- end .footer-widget --> </div> <!-- #footer-widgets --> </div> <!-- .container --> <div id="footer-bottom"> <div class="container clearfix"> <div id="footer-info">Implementado web por: <a href="#" target="_blank" rel="noopener noreferrer"><strong>Softronics</strong></a></div> </div> <!-- .container --> </div> </footer>
       <a href="https://wa.me/51906328260" target="_blank" class="whatsapp-icon" id="whatsappIcon">
     <img src="https://img.icons8.com/?size=64&id=16713&format=png" alt="WhatsApp Icon">
   </a>

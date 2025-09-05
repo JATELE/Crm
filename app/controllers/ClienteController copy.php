@@ -53,7 +53,7 @@ if ($accion === 'registrarte') {
     if ($objeto->registrar_cliente($dni, $nombres, $apellidos, $correo, $telefono, $lugar_nacimiento, $fecha_nacimiento, $estado_civil, $contraseña)) {
         unset($_SESSION['datos_registro']);
     }
-    header("Location: ../../web/iniciotienda.php");
+    header("Location: ../../web/InicioEncuestasInkarian.php");
     exit;
 }
 
