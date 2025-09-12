@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($objeto->registrar_cliente($dni, $nombres, $apellidos, $correo, $telefono, $lugar_nacimiento, $fecha_nacimiento, $estado_civil, $contraseña)) {
             unset($_SESSION['datos_registro']);
         }
-        header("Location: ../views/panel_clientes.php");
+        header("Location: ../../web/InicioEncuestasInkarian.php");
         exit;
     }
 

@@ -1,13 +1,194 @@
 <?php
-require_once("default/auth.php");
-if (!$logueado) {
-    header("Location: ../index.php");
-    exit;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
+$logueado = isset($_SESSION["cliente_sesion"]);
+$nombre = $logueado ? $_SESSION["cliente_sesion"]["nombre"] : "";
+$apellido = $logueado ? $_SESSION["cliente_sesion"]["apellido"] : "";
+$dni_cliente = $logueado ? $_SESSION["cliente_sesion"]["dni"] : "";
+
+require_once "../app/models/conexion.php";
+$con = new Conexion();
+$con->conectar();
+$conn = $con->getConexion();
+
+// --- Procesar envío de respuestas ---
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
+    $id_encuesta = intval($_POST["id_encuesta"]);
+    $fecha = date("Y-m-d");
+
+    if ($logueado) {
+        // Verificar si ya respondió
+        $stmt = $conn->prepare("SELECT 1 FROM respuestas2 WHERE dni_cliente = ? AND id_encuesta = ? LIMIT 1");
+        $stmt->bind_param("si", $dni_cliente, $id_encuesta);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            echo "<script>alert('Ya has respondido esta encuesta.'); window.location.href='encuentas.php';</script>";
+            exit;
+        }
+        $stmt->close();
+    } else {
+        echo "<script>alert('Debes iniciar sesión para responder la encuesta.'); window.location.href='encuentas.php';</script>";
+        exit;
+    }
+
+    // Guardar respuestas
+    if (isset($_POST["respuestas"]) && is_array($_POST["respuestas"])) {
+
+        // Si es encuesta Deseo, tomar los valores fuera del foreach
+        if ($id_encuesta == 9) {
+            $destino = isset($_POST["respuestas"][11]) ? trim($_POST["respuestas"][11]) : null;
+            $presupuesto_estimado = isset($_POST["respuestas"][12]) ? floatval($_POST["respuestas"][12]) : 0;
+            $tiempo_estimado = isset($_POST["respuestas"][13]) ? trim($_POST["respuestas"][13]) : null;
+            $peso_indicador = 0;
+        }
+
+        foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
+            $respuesta = trim($respuesta);
+            if ($respuesta !== "") {
+                // Guardar en respuestas2
+                $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        // Insertar en deseo2 solo una vez
+        if ($id_encuesta == 9) { // Encuesta Deseo
+            // Recoger las respuestas
+            $destino = trim($_POST["respuestas"][11] ?? "");
+            $presupuesto_input = trim($_POST["respuestas"][12] ?? "0");
+            $tiempo_estimado = trim($_POST["respuestas"][13] ?? "");
+
+            // Función para convertir texto como "2 mil" o "2,500" a número
+            function convertir_texto_a_numero($texto)
+            {
+                $texto = strtolower($texto);
+                $texto = str_replace(',', '', $texto); // quitar comas
+                $numero = 0;
+
+                if (preg_match('/(\d+)\s*mil/', $texto, $m)) {
+                    $numero = intval($m[1]) * 1000;
+                } elseif (preg_match('/(\d+)/', $texto, $m)) {
+                    $numero = intval($m[1]);
+                }
+
+                return $numero;
+            }
+
+            $presupuesto_estimado = convertir_texto_a_numero($presupuesto_input);
+
+            // Peso indicador opcional
+            $peso_indicador = 0;
+
+            // Guardar en deseo2
+            $stmt_deseo = $conn->prepare("INSERT INTO deseo2 (dni_cliente, destino, peso_indicador, presupuesto_estimado, tiempo_estimado) VALUES (?, ?, ?, ?, ?)");
+            $stmt_deseo->bind_param("ssdds", $dni_cliente, $destino, $peso_indicador, $presupuesto_estimado, $tiempo_estimado);
+            $stmt_deseo->execute();
+            $stmt_deseo->close();
+        }
+        if ($id_encuesta == 10) {
+            $bien_adquirido = trim($_POST["respuestas"][14] ?? "");
+            $calificacion = intval($_POST["respuestas"][15] ?? 0);
+            $lugar = trim($_POST["respuestas"][16] ?? "");
+            $descripcion_exp = trim($_POST["respuestas"][17] ?? "");
+            $tipo_de_viaje = trim($_POST["respuestas"][18] ?? "");
+            $fecha_visita = trim($_POST["respuestas"][19] ?? null);
+            $rango_costo = ""; // Opcional, puedes adaptarlo como presupuesto
+
+            $stmt_exp = $conn->prepare("INSERT INTO experiencia2 (dni_cliente, bien_adquirido, calificacion, rango_costo, lugar, descripcion, tipo_de_viaje, fecha_visita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt_exp->bind_param("ssisssss", $dni_cliente, $bien_adquirido, $calificacion, $rango_costo, $lugar, $descripcion_exp, $tipo_de_viaje, $fecha_visita);
+            $stmt_exp->execute();
+            $stmt_exp->close();
+        }
+
+        // Insertar en Interacciones2 si es encuesta Interacciones
+        if ($id_encuesta == 11) {
+            $fecha_inter = trim($_POST["respuestas"][20] ?? null);
+            $canal = trim($_POST["respuestas"][21] ?? "");
+            $descripcion_int = trim($_POST["respuestas"][22] ?? "");
+
+            $stmt_int = $conn->prepare("INSERT INTO interacciones2 (dni_cliente, fecha, canal, descripcion) VALUES (?, ?, ?, ?)");
+            $stmt_int->bind_param("ssss", $dni_cliente, $fecha_inter, $canal, $descripcion_int);
+            $stmt_int->execute();
+            $stmt_int->close();
+        }
+
+        // Sumar puntos
+        $stmt = $conn->prepare("SELECT puntos_encuesta FROM encuestas2 WHERE id_encuesta = ?");
+        $stmt->bind_param("i", $id_encuesta);
+        $stmt->execute();
+        $stmt->bind_result($puntos_encuesta);
+        $stmt->fetch();
+        $stmt->close();
+
+        $stmt = $conn->prepare("UPDATE clientes2 SET puntos = puntos + ? WHERE dni_cliente = ?");
+        $stmt->bind_param("is", $puntos_encuesta, $dni_cliente);
+        $stmt->execute();
+        $stmt->close();
+
+        echo "
+<script>
+Swal.fire({
+    icon: 'success',
+    title: '¡Gracias!',
+    text: 'Gracias por responder la encuesta.',
+    confirmButtonText: 'Aceptar'
+}).then(() => {
+    window.location.href = 'encuentas.php';
+});
+</script>
+";
+    }
+}
+
+// --- Obtener encuestas y sus preguntas ---
+$encuestas = [];
+if ($logueado) {
+    $sql_encuestas = "
+        SELECT * FROM encuestas2 e
+        WHERE NOT EXISTS (
+            SELECT 1 FROM respuestas2 r
+            WHERE r.id_encuesta = e.id_encuesta
+            AND r.dni_cliente = ?
+        )
+    ";
+    $stmt = $conn->prepare($sql_encuestas);
+    $stmt->bind_param("s", $dni_cliente);
+} else {
+    $sql_encuestas = "SELECT * FROM encuestas2"; // mostrar todas si no está logueado
+    $stmt = $conn->prepare($sql_encuestas);
+}
+
+$stmt->execute();
+$result_encuestas = $stmt->get_result();
+
+while ($encuesta = $result_encuestas->fetch_assoc()) {
+    $id_encuesta = $encuesta["id_encuesta"];
+    $sql_preguntas = "
+        SELECT p.id_pregunta, p.pregunta 
+        FROM preguntas2 p
+        JOIN encuesta_pregunta2 ep ON p.id_pregunta = ep.id_pregunta
+        WHERE ep.id_encuesta = ?
+    ";
+    $stmt2 = $conn->prepare($sql_preguntas);
+    $stmt2->bind_param("i", $id_encuesta);
+    $stmt2->execute();
+    $result_preguntas = $stmt2->get_result();
+    $preguntas = [];
+    while ($row = $result_preguntas->fetch_assoc()) {
+        $preguntas[] = $row;
+    }
+    $stmt2->close();
+
+    $encuesta["preguntas"] = $preguntas;
+    $encuestas[] = $encuesta;
+}
+$stmt->close();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,6 +205,8 @@ if (!$logueado) {
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body {
 
@@ -260,39 +443,22 @@ if (!$logueado) {
     </nav>
 
     <div class="container my-5">
-        <h2 class="mb-4 text-center">Encuestas Disponibles</h2>
-        <?php if (empty($encuestas)): ?>
-            <div class="container my-5">
-                <div class="no-surveys-card text-center p-5 mx-auto"
-                    style="max-width: 600px; border-radius: 25px; background: linear-gradient(135deg, #e0f7fa, #b2ebf2); box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s;">
-
-                    <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
-
-                    <h3 class="fw-bold mb-3" style="color: #00796b;">¡Excelente!</h3>
-
-                    <p class="lead mb-4" style="color: #004d40; line-height: 1.6;">
-                        Has respondido todas las encuestas disponibles.<br>
-                        Gracias por tu participación y por ayudarnos a mejorar nuestros servicios. 🌟
-                    </p>
-
-                    <span style="font-size: 2rem;">💬</span>
-                </div>
-            </div>
-        <?php endif; ?>
-        <div class="row">
-            <?php foreach ($encuestas as $encuesta): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary"><?= htmlspecialchars($encuesta["nombre_encuesta"]) ?></h5>
-                            <p class="card-text text-muted"><?= htmlspecialchars($encuesta["descripcion"]) ?></p>
-                            <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#form_<?= $encuesta["id_encuesta"] ?>" aria-expanded="false"
-                                aria-controls="form_<?= $encuesta["id_encuesta"] ?>">
-                                Responder
+        <?php if (!empty($encuestas)): ?>
+            <h2 class="mb-4 text-center">Encuestas Disponibles</h2>
+            <div class="accordion" id="accordionEncuestas">
+                <?php foreach ($encuestas as $encuesta): ?>
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header" id="heading_<?= $encuesta["id_encuesta"] ?>">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse_<?= $encuesta["id_encuesta"] ?>" aria-expanded="false"
+                                aria-controls="collapse_<?= $encuesta["id_encuesta"] ?>">
+                                <?= htmlspecialchars($encuesta["nombre_encuesta"]) ?>
                             </button>
-
-                            <div class="collapse mt-3" id="form_<?= $encuesta["id_encuesta"] ?>">
+                        </h2>
+                        <div id="collapse_<?= $encuesta["id_encuesta"] ?>" class="accordion-collapse collapse"
+                            aria-labelledby="heading_<?= $encuesta["id_encuesta"] ?>" data-bs-parent="#accordionEncuestas">
+                            <div class="accordion-body">
+                                <p class="text-muted"><?= htmlspecialchars($encuesta["descripcion"]) ?></p>
                                 <form method="POST">
                                     <input type="hidden" name="id_encuesta" value="<?= $encuesta["id_encuesta"] ?>">
                                     <?php foreach ($encuesta["preguntas"] as $pregunta): ?>
@@ -307,10 +473,24 @@ if (!$logueado) {
                             </div>
                         </div>
                     </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div class="container my-5">
+                <div class="no-surveys-card text-center p-5 mx-auto"
+                    style="max-width: 600px; border-radius: 25px; background: linear-gradient(135deg, #e0f7fa, #b2ebf2); box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
+                    <h3 class="fw-bold mb-3" style="color: #00796b;">¡Excelente!</h3>
+                    <p class="lead mb-4" style="color: #004d40; line-height: 1.6;">
+                        Has respondido todas las encuestas disponibles.<br>
+                        Gracias por tu participación y por ayudarnos a mejorar nuestros servicios. 🌟
+                    </p>
+                    <span style="font-size: 2rem;">💬</span>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endif; ?>
     </div>
+
 </body>
 <?php require_once("default/footer.php"); ?>
 
