@@ -130,3 +130,59 @@ CREATE TABLE promociones2 (
 INSERT INTO promociones2 (descripcion) VALUES 
 ('🎉 ¡Feliz San Valentín! ❤️ Disfruta de un 20% de descuento en paquetes románticos a Cusco del 10 al 15 de febrero. Reserva ya y sorprende a tu pareja 💕');
 
+SELECT * FROM licencias;
+select * from configuracion;
+
+
+-- ======================================
+-- 🧱 Tabla: licencias
+-- ======================================
+CREATE TABLE licencias (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  codigo_hash VARCHAR(255) NOT NULL,
+  codigo_publico VARCHAR(100) NOT NULL,
+  usado TINYINT(1) DEFAULT 0,
+  activado_por VARCHAR(100) DEFAULT NULL,
+  fecha_activacion DATETIME DEFAULT NULL,
+  expiracion DATETIME DEFAULT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ======================================
+-- 🧱 Tabla: configuracion
+-- ======================================
+CREATE TABLE configuracion (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  version_pro CHAR(1) DEFAULT 'N',
+  licencia_id INT DEFAULT NULL,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_config_licencia FOREIGN KEY (licencia_id)
+    REFERENCES licencias(id) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ======================================
+-- 🔹 Registro inicial en configuración
+-- ======================================
+INSERT INTO configuracion (version_pro, licencia_id, updated_at)
+VALUES ('N', NULL, NOW());
+
+INSERT INTO licencias (codigo_hash, codigo_publico) 
+VALUES ('$2y$10$...', 'PRO-123ABC');
+
+INSERT INTO licencias (codigo_hash, codigo_publico, usado)
+VALUES (
+  '$2y$10$F5xq7FZ9mMNZ2IhHyqQkBe5G3tqKkJHfA1Re8rHnAMoZ0Dh5G1U2a',
+  'PRO-123ABC',
+  0
+);
+INSERT INTO licencias (codigo_hash, codigo_publico, usado)
+VALUES ('$2y$10$G5Dk...etc...', 'PRO-Z0D13X', 0);
+
+INSERT INTO licencias (codigo_hash, codigo_publico, usado)
+VALUES (
+  '$2y$10$4HyTE/GHloXVKCCtmACicuws.l8aiRDTjNbeqdW8VhBrjzWytWOWG',
+  'PRO-9DD808',
+  0
+);
+SELECT * FROM licencias;
+select * from configuracion;
