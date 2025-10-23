@@ -36,61 +36,89 @@ $campañas = $controller->listar_campaña();
           <li class="active">Reportes Campaña</li>
         </ol>
       </section>
+<div class="container my-5">
+
+  <!-- Formulario en tarjeta elegante -->
+  <div class="card shadow-sm rounded-4 border-0 mb-5">
+    <div class="card-header bg-secondary text-white rounded-top-4 p-3">
+      <h4 class="mb-0"><i class="bi bi-megaphone-fill"></i> Registrar Nueva Campaña</h4>
+    </div>
+    <div class="card-body p-4">
       <form action="../controllers/CampañaController.php" method="POST">
         <input type="hidden" name="accion" value="registrar">
-        <div class="form-group">
-          <label for="nombre_campaña">Nombre de la Campaña</label>
-          <input type="text" name="nombre_campaña" id="nombre_campaña" class="form-control" required>
+
+        <div class="mb-3">
+          <label for="nombre_campaña" class="form-label fw-semibold">Nombre de la Campaña</label>
+          <input type="text" name="nombre_campaña" id="nombre_campaña" class="form-control form-control-lg shadow-sm" placeholder="Ingrese el nombre" required>
         </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label fw-semibold">Descripción</label>
+          <textarea name="descripcion" id="descripcion" class="form-control form-control-lg shadow-sm" rows="3" placeholder="Describa la campaña" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="fecha_inicio">Fecha de Inicio</label>
-          <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label for="fecha_inicio" class="form-label fw-semibold">Fecha de Inicio</label>
+            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control form-control-lg shadow-sm" required>
+          </div>
+          <div class="col-md-6">
+            <label for="fecha_fin" class="form-label fw-semibold">Fecha de Fin</label>
+            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control form-control-lg shadow-sm" required>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="fecha_fin">Fecha de Fin</label>
-          <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Registrar Campaña</button>
+
+        <button type="submit" class="btn btn-primary btn-lg w-100 fw-semibold">
+          <i class="bi bi-plus-circle-fill"></i> Registrar Campaña
+        </button>
       </form>
+    </div>
+  </div>
 
-      <hr>
+  <!-- Listado de campañas elegante -->
+  <h4 class="mb-4 fw-semibold text-secondary"><i class="bi bi-card-list"></i> Campañas Activas</h4>
+  <div class="row g-4">
+    <?php foreach ($campañas as $c): ?>
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100 border-0 rounded-4 overflow-hidden">
+          <div class="card-header bg-light text-dark">
+            <h5 class="mb-0"><?= htmlspecialchars($c['nombre_campaña']) ?></h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text text-muted"><?= htmlspecialchars($c['descripcion']) ?></p>
+            <p class="mb-1"><strong>Inicio:</strong> <?= htmlspecialchars($c['fecha_inicio']) ?></p>
+            <p class="mb-3"><strong>Fin:</strong> <?= htmlspecialchars($c['fecha_fin']) ?></p>
+            <div class="d-grid">
+              <a href="../controllers/CampañaController.php?accion=eliminar&id=<?= $c['id_campaña'] ?>" 
+                 class="btn btn-outline-danger fw-semibold" 
+                 onclick="return confirm('¿Estás seguro de eliminar esta campaña?');">
+                 <i class="bi bi-trash-fill"></i> Eliminar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</div>
 
-      <!-- Tabla de campañas -->
-      <h4 class="mt-4">Listado de Campañas</h4>
-      <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($campañas as $c): ?>
-            <tr>
-              <td><?= htmlspecialchars($c['id_campaña']) ?></td>
-              <td><?= htmlspecialchars($c['nombre_campaña']) ?></td>
-              <td><?= htmlspecialchars($c['descripcion']) ?></td>
-              <td><?= htmlspecialchars($c['fecha_inicio']) ?></td>
-              <td><?= htmlspecialchars($c['fecha_fin']) ?></td>
-              <td>
-                <a href="../controllers/CampañaController.php?accion=eliminar&id=<?= $c['id_campaña'] ?>"
-                  class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta campaña?');">
-                  Eliminar
-                </a>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-        
-      </table>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+  /* Efectos suaves */
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+</style>
+
     </div>
     <?php require_once("default/footer.php"); ?>
   </div>

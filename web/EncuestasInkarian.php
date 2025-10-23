@@ -7,8 +7,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CRM turísticos</title>
-
-  <!-- Estilos -->
   <link rel="stylesheet" href="css/gym.css">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,10 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-
-
-
-  <!-- Scripts -->
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -237,8 +231,6 @@
         aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <!-- Menú principal -->
       <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
         <ul class="navbar-nav">
           <li class="nav-item mx-5"><a class="nav-link M11" href="EncuestasInkarian.php">Inicio</a></li>
@@ -246,17 +238,13 @@
           <li class="nav-item mx-5"><a class="nav-link M11" href="encuentas.php">Encuestas</a></li>
         </ul>
       </div>
-
-      <!-- Logo -->
       <div class="redes position-absolute top-50 end+110 translate-middle-y pe-3">
         <img src="https://inkarian.com/wp-content/uploads/2023/03/Logo-web512x512.png" class="img-fluid rounded-circle"
           alt="Logo Inkrian" style="width: 150px; height: 80px;">
       </div>
 
-      <!-- Usuario -->
       <div class="position-absolute top-50 end-0 translate-middle-y pe-3 d-flex align-items-center">
         <?php if ($logueado): ?>
-          <!-- Dropdown de usuario -->
           <div class="dropdown">
             <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -272,7 +260,6 @@
             </ul>
           </div>
         <?php else: ?>
-          <!-- Botones si no está logueado -->
           <a href="../app/index.php" class="btn btn-outline-primary btn-sm me-2">Inicia sesión</a>
           <a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro" class="btn btn-success btn-sm">Regístrate</a>
         <?php endif; ?>

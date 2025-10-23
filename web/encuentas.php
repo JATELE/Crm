@@ -1,4 +1,5 @@
 <?php
+require_once("default/auth.php"); 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,13 +14,11 @@ $con = new Conexion();
 $con->conectar();
 $conn = $con->getConexion();
 
-// --- Procesar envío de respuestas ---
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
     $id_encuesta = intval($_POST["id_encuesta"]);
     $fecha = date("Y-m-d");
 
     if ($logueado) {
-        // Verificar si ya respondió
         $stmt = $conn->prepare("SELECT 1 FROM respuestas2 WHERE dni_cliente = ? AND id_encuesta = ? LIMIT 1");
         $stmt->bind_param("si", $dni_cliente, $id_encuesta);
         $stmt->execute();
@@ -33,11 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
         echo "<script>alert('Debes iniciar sesión para responder la encuesta.'); window.location.href='encuentas.php';</script>";
         exit;
     }
-
-    // Guardar respuestas
     if (isset($_POST["respuestas"]) && is_array($_POST["respuestas"])) {
 
-        // Si es encuesta Deseo, tomar los valores fuera del foreach
         if ($id_encuesta == 9) {
             $destino = isset($_POST["respuestas"][11]) ? trim($_POST["respuestas"][11]) : null;
             $presupuesto_estimado = isset($_POST["respuestas"][12]) ? floatval($_POST["respuestas"][12]) : 0;
@@ -48,16 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
         foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
             $respuesta = trim($respuesta);
             if ($respuesta !== "") {
-                // Guardar en respuestas2
                 $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) VALUES (?, ?, ?, ?, ?)");
                 $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
                 $stmt->execute();
                 $stmt->close();
             }
         }
-
-        // Insertar en deseo2 solo una vez
-        if ($id_encuesta == 9) { // Encuesta Deseo
+        if ($id_encuesta == 9) { 
             // Recoger las respuestas
             $destino = trim($_POST["respuestas"][11] ?? "");
             $presupuesto_input = trim($_POST["respuestas"][12] ?? "0");
@@ -97,15 +90,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
             $descripcion_exp = trim($_POST["respuestas"][17] ?? "");
             $tipo_de_viaje = trim($_POST["respuestas"][18] ?? "");
             $fecha_visita = trim($_POST["respuestas"][19] ?? null);
-            $rango_costo = ""; // Opcional, puedes adaptarlo como presupuesto
+            $rango_costo = "";
 
             $stmt_exp = $conn->prepare("INSERT INTO experiencia2 (dni_cliente, bien_adquirido, calificacion, rango_costo, lugar, descripcion, tipo_de_viaje, fecha_visita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt_exp->bind_param("ssisssss", $dni_cliente, $bien_adquirido, $calificacion, $rango_costo, $lugar, $descripcion_exp, $tipo_de_viaje, $fecha_visita);
             $stmt_exp->execute();
             $stmt_exp->close();
         }
-
-        // Insertar en Interacciones2 si es encuesta Interacciones
         if ($id_encuesta == 11) {
             $fecha_inter = trim($_POST["respuestas"][20] ?? null);
             $canal = trim($_POST["respuestas"][21] ?? "");
@@ -116,8 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
             $stmt_int->execute();
             $stmt_int->close();
         }
-
-        // Sumar puntos
         $stmt = $conn->prepare("SELECT puntos_encuesta FROM encuestas2 WHERE id_encuesta = ?");
         $stmt->bind_param("i", $id_encuesta);
         $stmt->execute();
@@ -145,7 +134,6 @@ Swal.fire({
     }
 }
 
-// --- Obtener encuestas y sus preguntas ---
 $encuestas = [];
 if ($logueado) {
     $sql_encuestas = "
@@ -159,7 +147,7 @@ if ($logueado) {
     $stmt = $conn->prepare($sql_encuestas);
     $stmt->bind_param("s", $dni_cliente);
 } else {
-    $sql_encuestas = "SELECT * FROM encuestas2"; // mostrar todas si no está logueado
+    $sql_encuestas = "SELECT * FROM encuestas2"; 
     $stmt = $conn->prepare($sql_encuestas);
 }
 
@@ -396,8 +384,6 @@ $stmt->close();
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <!-- Menú principal -->
             <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
                 <ul class="navbar-nav">
                     <li class="nav-item mx-5"><a class="nav-link M11" href="EncuestasInkarian.php">Inicio</a></li>
@@ -405,17 +391,12 @@ $stmt->close();
                     <li class="nav-item mx-5"><a class="nav-link M11" href="encuentas.php">Encuestas</a></li>
                 </ul>
             </div>
-
-            <!-- Logo -->
             <div class="redes position-absolute top-50 end+110 translate-middle-y pe-3">
                 <img src="https://inkarian.com/wp-content/uploads/2023/03/Logo-web512x512.png"
                     class="img-fluid rounded-circle" alt="Logo Inkrian" style="width: 150px; height: 80px;">
             </div>
-
-            <!-- Usuario -->
             <div class="position-absolute top-50 end-0 translate-middle-y pe-3 d-flex align-items-center">
                 <?php if ($logueado): ?>
-                    <!-- Dropdown de usuario -->
                     <div class="dropdown">
                         <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -433,7 +414,6 @@ $stmt->close();
                         </ul>
                     </div>
                 <?php else: ?>
-                    <!-- Botones si no está logueado -->
                     <a href="../app/index.php" class="btn btn-outline-primary btn-sm me-2">Inicia sesión</a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro"
                         class="btn btn-success btn-sm">Regístrate</a>

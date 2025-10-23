@@ -5,16 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CRM turísticos</title>
-
-  <!-- Estilos -->
   <link rel="stylesheet" href="css/gym.css">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-
-  <!-- Scripts -->
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -201,7 +197,6 @@
 </head>
 
 <body>
-  <!-- Top bar -->
   <div class="top-bar">
     🚚 Gana descuentos increibles con tus puntos
   </div>
@@ -213,7 +208,6 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!-- Menú principal -->
       <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
         <ul class="navbar-nav">
           <?php if ($logueado): ?>
@@ -227,16 +221,13 @@
         </ul>
       </div>
 
-      <!-- Logo -->
       <div class="redes position-absolute top-50 end+110 translate-middle-y pe-3">
         <img src="https://inkarian.com/wp-content/uploads/2023/03/Logo-web512x512.png" class="img-fluid rounded-circle"
           alt="Logo Inkrian" style="width: 150px; height: 80px;">
       </div>
 
-      <!-- Usuario -->
       <div class="position-absolute top-50 end-0 translate-middle-y pe-3 d-flex align-items-center">
         <?php if ($logueado): ?>
-          <!-- Dropdown de usuario -->
           <div class="dropdown">
             <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -252,7 +243,6 @@
             </ul>
           </div>
         <?php else: ?>
-          <!-- Botones si no está logueado -->
           <a href="../app/index.php" class="btn btn-outline-primary btn-sm me-2">Inicia sesión</a>
           <a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro" class="btn btn-success btn-sm">Regístrate</a>
         <?php endif; ?>
@@ -264,7 +254,6 @@
     <h2 class="text-center mb-4 fw-bold text-success">🌍 Servicios Turísticos</h2>
     <div class="row g-4 justify-content-center">
 
-      <!-- Hotel -->
       <div class="col-md-4">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -277,7 +266,6 @@
         </div>
       </div>
 
-      <!-- Restaurante -->
       <div class="col-md-4">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -290,7 +278,6 @@
         </div>
       </div>
 
-      <!-- Planes turísticos -->
       <div class="col-md-4">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -305,7 +292,7 @@
 
     </div>
   </section>
-  <!-- Recompensas con puntos -->
+
   <section class="container my-5">
     <h2 class="text-center mb-4 fw-bold text-warning">🎁 Recompensas con tus Puntos</h2>
     <p class="text-center text-muted mb-5">
@@ -316,7 +303,7 @@
     <div class="row g-4 justify-content-center">
 
 
-      <!-- Descuento en hoteles -->
+
       <div class="col-md-4">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -329,7 +316,7 @@
         </div>
       </div>
 
-      <!-- Cena gratis -->
+
       <div class="col-md-4">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -342,7 +329,7 @@
         </div>
       </div>
 
-      <!-- Tour gratuito -->
+
       <div class="col-md-4">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -355,7 +342,7 @@
         </div>
       </div>
 
-      <!-- Chocolates -->
+
       <div class="col-md-3">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -368,7 +355,6 @@
         </div>
       </div>
 
-      <!-- Galletas -->
       <div class="col-md-3">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -381,7 +367,7 @@
         </div>
       </div>
 
-      <!-- Gaseosa -->
+
       <div class="col-md-3">
         <div class="card h-100 shadow-sm border-0 rounded-4">
           <div class="card-body text-center">
@@ -446,7 +432,7 @@
       <?php if (!$logueado): ?>
         if (encuestaLink) {
           encuestaLink.addEventListener("click", function (e) {
-            e.preventDefault(); // Evita redirección solo si NO está logueado
+            e.preventDefault();
             Swal.fire({
               icon: 'warning',
               title: 'Necesitas registrarte',
@@ -456,7 +442,6 @@
               cancelButtonText: 'Cancelar'
             }).then((result) => {
               if (result.isConfirmed) {
-                // Abre modal de registro
                 let modal = new bootstrap.Modal(document.getElementById("modalRegistro"));
                 modal.show();
               }
@@ -470,7 +455,6 @@
 
   <script>
     $(document).ready(function () {
-      // Inicializar carrusel
       $('.carrusel').slick({
         dots: true,
         infinite: true,
@@ -497,7 +481,6 @@
         });
       <?php endif; ?>
 
-      // Botón limpiar formulario
       var btnLimpiar = document.getElementById("btnLimpiar");
       if (btnLimpiar) {
         btnLimpiar.addEventListener("click", function () {

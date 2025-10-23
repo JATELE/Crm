@@ -9,7 +9,7 @@ if (isset($_SESSION["usuario_sesion"])) {
   exit();
 }
 
-require_once '../models/conexion.php';
+include_once __DIR__ . '/../models/conexion.php';
 $conexion = new Conexion();
 $conexion->conectar();
 
@@ -46,7 +46,7 @@ if ($resultadoRoles) {
   echo "Error al consultar roles: " . $conexion->getConexion()->error;
 }
 
-$conexion->cerrarConexion();
+
 ?>
 
 <!DOCTYPE html>
@@ -183,7 +183,7 @@ $conexion->cerrarConexion();
       </form>
     </div>
 
-    <?php require_once("default/footer.php"); ?>
+  <?php require_once("default/footer.php"); ?>
   </div>
 
   <script>
