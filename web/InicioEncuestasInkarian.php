@@ -209,8 +209,66 @@ function inputField($type, $name, $label, $errores, $datos)
 <body>
   <!-- Top bar -->
   <div class="top-bar">
-    🚚 Gana descuentos increíbles con tus puntos
+    <div class="moving-text">
+      🚚 ¡Gana <span class="highlight">descuentos increíbles</span> con tus puntos! 🎁
+      🚀 Canjea y ahorra en tus compras favoritas 💳
+    </div>
   </div>
+
+  <style>
+    /* Estilo de la barra */
+    .top-bar {
+      background: linear-gradient(90deg, #f38c47ff, #1dd1a1, #54a0ff);
+      background-size: 400% 400%;
+      animation: moveGradient 8s ease infinite;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+      position: relative;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Movimiento del fondo */
+    @keyframes moveGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Texto desplazándose */
+    .moving-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: moveText 18s linear infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Palabra destacada */
+    .highlight {
+      color: #fff;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffe066;
+    }
+  </style>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">
@@ -220,13 +278,119 @@ function inputField($type, $name, $label, $errores, $datos)
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- Navbar -->
       <div class="collapse navbar-collapse nav justify-content-center" id="navbarContent">
         <ul class="navbar-nav">
-          <li class="nav-item mx-5"><a class="nav-link M11" href="inicioEncuestasInkarian.php">Inicio</a></li>
-          <li class="nav-item mx-5"><a class="nav-link M11" href="servicios.php">Servicios</a></li>
-          <li class="nav-item mx-5"><a class="nav-link M11" href="encuentas.php">Encuestas</a></li>
+          <li class="nav-item"><a class="nav-link M11" href="inicioEncuestasInkarian.php">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link M11" href="servicios.php">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link M11" href="encuentas.php">Encuestas</a></li>
         </ul>
       </div>
+
+      <style>
+        /* ===== Navbar estilo moderno solo con línea animada ===== */
+        .navbar-nav .nav-item .nav-link.M11 {
+          color: #333;
+          /* color base del texto */
+          font-weight: 600;
+          font-size: 1.05rem;
+          padding: 10px 0;
+          /* solo espacio vertical */
+          border-radius: 0;
+          /* sin esquinas redondeadas */
+          transition: color 0.3s ease;
+          position: relative;
+          text-transform: uppercase;
+
+          /* Animación al cargar */
+          opacity: 0;
+          transform: translateY(-20px);
+          animation: slideDown 0.6s ease forwards;
+        }
+
+        /* Animación escalonada para cada link */
+        .navbar-nav .nav-item:nth-child(1) .nav-link.M11 {
+          animation-delay: 0.2s;
+        }
+
+        .navbar-nav .nav-item:nth-child(2) .nav-link.M11 {
+          animation-delay: 0.4s;
+        }
+
+        .navbar-nav .nav-item:nth-child(3) .nav-link.M11 {
+          animation-delay: 0.6s;
+        }
+
+        /* Hover elegante: solo color y línea */
+        .navbar-nav .nav-item .nav-link.M11:hover {
+          color: #ff6600;
+        }
+
+        /* Línea animada debajo del link */
+        .navbar-nav .nav-item .nav-link.M11::after {
+          content: '';
+          display: block;
+          width: 0;
+          height: 3px;
+          /* grosor de la línea */
+          background: #ff6600;
+          transition: width 0.3s ease;
+          border-radius: 2px;
+          margin-top: 5px;
+        }
+
+        .navbar-nav .nav-item .nav-link.M11:hover::after {
+          width: 100%;
+        }
+
+        /* Espaciado entre links aumentado para mayor separación */
+        .navbar-nav .nav-item {
+          margin-left: 3rem;
+          /* más separación horizontal */
+          margin-right: 3rem;
+        }
+
+        /* ===== Keyframes de animación al entrar ===== */
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+          .navbar-nav .nav-item {
+            margin-left: 2rem;
+            margin-right: 2rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .navbar-nav .nav-item .nav-link.M11 {
+            font-size: 0.95rem;
+            padding: 8px 0;
+          }
+
+          .navbar-nav .nav-item {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .navbar-nav .nav-item {
+            margin-left: 1rem;
+            margin-right: 1rem;
+          }
+        }
+      </style>
+
       <div class="redes position-absolute top-50 end+110 translate-middle-y pe-3"> <img
           src="https://inkarian.com/wp-content/uploads/2023/03/Logo-web512x512.png" class="img-fluid rounded-circle"
           alt="Logo Inkrian" style="width: 150px; height: 80px;"> </div>
@@ -254,11 +418,13 @@ function inputField($type, $name, $label, $errores, $datos)
         alt="Banner 4" class="w-100"></div>
   </div>
 
+
   <!-- Sección About / Encuestas -->
   <section class="about-encuestas py-5" style="background-color: #f7f7f7;">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0">
+        <!-- Columna de texto -->
+        <div class="col-lg-6 mb-4 mb-lg-0 texto-animado">
           <h2 class="fw-bold mb-3" style="color:#ff6600;">Inkarián Encuestas</h2>
           <p class="lead text-muted">
             Esta página está dedicada a <strong>encuestas generales para clientes</strong> de la empresa
@@ -271,17 +437,211 @@ function inputField($type, $name, $label, $errores, $datos)
             <li>🎁 Gana puntos por tu participación</li>
             <li>💸 Usa tus puntos para obtener descuentos exclusivos</li>
           </ul>
-          <<a href="encuestas.php" class="btn btn-warning btn-lg mt-3" data-bs-toggle="modal"
-            data-bs-target="#modalRegistro" style="border-radius: 30px;"> ¡Registrate y Empieza a responder encuestas!
-            </a>
+          <a href="encuestas.php" class="btn btn-warning btn-lg mt-3" data-bs-toggle="modal"
+            data-bs-target="#modalRegistro" style="border-radius: 30px;">¡Regístrate y empieza a responder
+            encuestas!</a>
         </div>
-        <div class="col-lg-6 text-center">
+
+        <!-- Columna de imagen -->
+        <div class="col-lg-6 text-center logo-animado">
           <img src="https://inkarian.com/wp-content/uploads/2023/03/Logo-web512x512.png" alt="Encuestas Inkarián"
             class="img-fluid rounded shadow-lg" style="max-width: 500px;">
         </div>
       </div>
     </div>
   </section>
+
+  <style>
+    /* ===== Animación del texto desde la izquierda ===== */
+    .texto-animado {
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideFromLeft 1s ease-out forwards;
+    }
+
+    /* ===== Animación del logo desde la derecha ===== */
+    .logo-animado {
+      opacity: 0;
+      transform: translateX(50px);
+      animation: slideFromRight 1s ease-out forwards;
+      animation-delay: 0.5s;
+      /* Retraso para que el texto aparezca primero */
+    }
+
+    /* ===== Keyframes ===== */
+    @keyframes slideFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ===== Botón animado ===== */
+    .about-encuestas .btn-warning {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-encuestas .btn-warning:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .about-encuestas h2 {
+        font-size: 1.8rem;
+      }
+
+      .about-encuestas .lead {
+        font-size: 1rem;
+      }
+
+      .about-encuestas img {
+        max-width: 300px;
+      }
+    }
+  </style>
+
+  <!-- SECCIÓN BENEFICIOS -->
+  <section class="beneficios text-center" data-aos="fade-up">
+    <div class="container">
+      <h2 class="mb-5" style="color:#ff6600; font-weight:700;">¿Por qué elegir Inkarián?</h2>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="flip-left">
+          <div class="beneficio-card">
+            <i class="fa-solid fa-gift"></i>
+            <h5>Recompensas reales</h5>
+            <p>Gana premios por tu tiempo y opiniones valiosas.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="flip-up">
+          <div class="beneficio-card">
+            <i class="fa-solid fa-stopwatch"></i>
+            <h5>Encuestas rápidas</h5>
+            <p>Responde en minutos desde cualquier dispositivo.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="flip-right">
+          <div class="beneficio-card">
+            <i class="fa-solid fa-people-group"></i>
+            <h5>Comunidad activa</h5>
+            <p>Únete a miles de personas que ya disfrutan de Inkarián.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* ===== ANIMACIÓN GENERAL AL ABRIR LA PÁGINA ===== */
+    .beneficios {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    /* ===== ANIMACIÓN INDIVIDUAL DE LAS TARJETAS ===== */
+    .beneficio-card {
+      opacity: 0;
+      transform: scale(0.9);
+      animation: popUp 1s ease-out forwards;
+    }
+
+    /* Retraso escalonado para que aparezcan una por una */
+    .col-md-4:nth-child(1) .beneficio-card {
+      animation-delay: 0.4s;
+    }
+
+    .col-md-4:nth-child(2) .beneficio-card {
+      animation-delay: 0.7s;
+    }
+
+    .col-md-4:nth-child(3) .beneficio-card {
+      animation-delay: 1s;
+    }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes popUp {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* ===== ESTILO DE LAS TARJETAS ===== */
+    .beneficio-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .beneficio-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Íconos dentro de las tarjetas */
+    .beneficio-card i {
+      font-size: 2.5rem;
+      color: #ff6600;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    /* Efecto al pasar el mouse sobre el ícono */
+    .beneficio-card:hover i {
+      transform: scale(1.2);
+      color: #ff8800;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .beneficio-card {
+        padding: 20px;
+      }
+
+      .beneficio-card i {
+        font-size: 2rem;
+      }
+    }
+  </style>
+
 
   <!-- Footer -->
   <?php require_once("default/footer.php"); ?>

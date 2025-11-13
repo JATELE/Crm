@@ -1,5 +1,5 @@
 <?php
-require_once("default/auth.php"); 
+require_once("default/auth.php");
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -34,104 +34,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
     }
     if (isset($_POST["respuestas"]) && is_array($_POST["respuestas"])) {
 
-        if ($id_encuesta == 9) {
-            $destino = isset($_POST["respuestas"][11]) ? trim($_POST["respuestas"][11]) : null;
-            $presupuesto_estimado = isset($_POST["respuestas"][12]) ? floatval($_POST["respuestas"][12]) : 0;
-            $tiempo_estimado = isset($_POST["respuestas"][13]) ? trim($_POST["respuestas"][13]) : null;
-            $peso_indicador = 0;
+    foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
+        $respuesta = trim($respuesta);
+        if ($respuesta !== "") {
+            $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
+            $stmt->execute();
+            $stmt->close();
         }
-
-        foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
-            $respuesta = trim($respuesta);
-            if ($respuesta !== "") {
-                $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
-                $stmt->execute();
-                $stmt->close();
-            }
-        }
-        if ($id_encuesta == 9) { 
-            // Recoger las respuestas
-            $destino = trim($_POST["respuestas"][11] ?? "");
-            $presupuesto_input = trim($_POST["respuestas"][12] ?? "0");
-            $tiempo_estimado = trim($_POST["respuestas"][13] ?? "");
-
-            // Función para convertir texto como "2 mil" o "2,500" a número
-            function convertir_texto_a_numero($texto)
-            {
-                $texto = strtolower($texto);
-                $texto = str_replace(',', '', $texto); // quitar comas
-                $numero = 0;
-
-                if (preg_match('/(\d+)\s*mil/', $texto, $m)) {
-                    $numero = intval($m[1]) * 1000;
-                } elseif (preg_match('/(\d+)/', $texto, $m)) {
-                    $numero = intval($m[1]);
-                }
-
-                return $numero;
-            }
-
-            $presupuesto_estimado = convertir_texto_a_numero($presupuesto_input);
-
-            // Peso indicador opcional
-            $peso_indicador = 0;
-
-            // Guardar en deseo2
-            $stmt_deseo = $conn->prepare("INSERT INTO deseo2 (dni_cliente, destino, peso_indicador, presupuesto_estimado, tiempo_estimado) VALUES (?, ?, ?, ?, ?)");
-            $stmt_deseo->bind_param("ssdds", $dni_cliente, $destino, $peso_indicador, $presupuesto_estimado, $tiempo_estimado);
-            $stmt_deseo->execute();
-            $stmt_deseo->close();
-        }
-        if ($id_encuesta == 10) {
-            $bien_adquirido = trim($_POST["respuestas"][14] ?? "");
-            $calificacion = intval($_POST["respuestas"][15] ?? 0);
-            $lugar = trim($_POST["respuestas"][16] ?? "");
-            $descripcion_exp = trim($_POST["respuestas"][17] ?? "");
-            $tipo_de_viaje = trim($_POST["respuestas"][18] ?? "");
-            $fecha_visita = trim($_POST["respuestas"][19] ?? null);
-            $rango_costo = "";
-
-            $stmt_exp = $conn->prepare("INSERT INTO experiencia2 (dni_cliente, bien_adquirido, calificacion, rango_costo, lugar, descripcion, tipo_de_viaje, fecha_visita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_exp->bind_param("ssisssss", $dni_cliente, $bien_adquirido, $calificacion, $rango_costo, $lugar, $descripcion_exp, $tipo_de_viaje, $fecha_visita);
-            $stmt_exp->execute();
-            $stmt_exp->close();
-        }
-        if ($id_encuesta == 11) {
-            $fecha_inter = trim($_POST["respuestas"][20] ?? null);
-            $canal = trim($_POST["respuestas"][21] ?? "");
-            $descripcion_int = trim($_POST["respuestas"][22] ?? "");
-
-            $stmt_int = $conn->prepare("INSERT INTO interacciones2 (dni_cliente, fecha, canal, descripcion) VALUES (?, ?, ?, ?)");
-            $stmt_int->bind_param("ssss", $dni_cliente, $fecha_inter, $canal, $descripcion_int);
-            $stmt_int->execute();
-            $stmt_int->close();
-        }
-        $stmt = $conn->prepare("SELECT puntos_encuesta FROM encuestas2 WHERE id_encuesta = ?");
-        $stmt->bind_param("i", $id_encuesta);
-        $stmt->execute();
-        $stmt->bind_result($puntos_encuesta);
-        $stmt->fetch();
-        $stmt->close();
-
-        $stmt = $conn->prepare("UPDATE clientes2 SET puntos = puntos + ? WHERE dni_cliente = ?");
-        $stmt->bind_param("is", $puntos_encuesta, $dni_cliente);
-        $stmt->execute();
-        $stmt->close();
-
-        echo "
-<script>
-Swal.fire({
-    icon: 'success',
-    title: '¡Gracias!',
-    text: 'Gracias por responder la encuesta.',
-    confirmButtonText: 'Aceptar'
-}).then(() => {
-    window.location.href = 'encuentas.php';
-});
-</script>
-";
     }
+
+    // Lógica específica según la encuesta
+    if ($id_encuesta == 1) { // Deseo
+        $destino = trim($_POST["respuestas"][1] ?? "");
+        $presupuesto = floatval($_POST["respuestas"][2] ?? 0);
+        $tiempo = trim($_POST["respuestas"][3] ?? "");
+
+        $stmt_deseo = $conn->prepare("INSERT INTO deseo2 (dni_cliente, destino, peso_indicador, presupuesto_estimado, tiempo_estimado) VALUES (?, ?, ?, ?, ?)");
+        $peso_indicador = 0; // opcional
+        $stmt_deseo->bind_param("ssdds", $dni_cliente, $destino, $peso_indicador, $presupuesto, $tiempo);
+        $stmt_deseo->execute();
+        $stmt_deseo->close();
+    }
+
+    if ($id_encuesta == 2) { // Experiencia
+        $bien_adquirido = trim($_POST["respuestas"][4] ?? "");
+        $calificacion = intval($_POST["respuestas"][5] ?? 0);
+        $lugar = trim($_POST["respuestas"][6] ?? "");
+        $descripcion = trim($_POST["respuestas"][7] ?? "");
+        $tipo = trim($_POST["respuestas"][8] ?? "");
+        $fecha_visita = trim($_POST["respuestas"][9] ?? null);
+
+        $stmt_exp = $conn->prepare("INSERT INTO experiencia2 (dni_cliente, bien_adquirido, calificacion, rango_costo, lugar, descripcion, tipo_de_viaje, fecha_visita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $rango_costo = ""; // opcional
+        $stmt_exp->bind_param("ssisssss", $dni_cliente, $bien_adquirido, $calificacion, $rango_costo, $lugar, $descripcion, $tipo, $fecha_visita);
+        $stmt_exp->execute();
+        $stmt_exp->close();
+    }
+
+    if ($id_encuesta == 3) { // Interacciones
+        $fecha_inter = trim($_POST["respuestas"][10] ?? null);
+        $canal = trim($_POST["respuestas"][11] ?? "");
+        $descripcion_int = trim($_POST["respuestas"][12] ?? "");
+
+        $stmt_int = $conn->prepare("INSERT INTO interacciones2 (dni_cliente, fecha, canal, descripcion) VALUES (?, ?, ?, ?)");
+        $stmt_int->bind_param("ssss", $dni_cliente, $fecha_inter, $canal, $descripcion_int);
+        $stmt_int->execute();
+        $stmt_int->close();
+    }
+}
 }
 
 $encuestas = [];
@@ -147,7 +98,7 @@ if ($logueado) {
     $stmt = $conn->prepare($sql_encuestas);
     $stmt->bind_param("s", $dni_cliente);
 } else {
-    $sql_encuestas = "SELECT * FROM encuestas2"; 
+    $sql_encuestas = "SELECT * FROM encuestas2";
     $stmt = $conn->prepare($sql_encuestas);
 }
 
@@ -196,7 +147,37 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        html,
         body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1; /* ocupa todo el espacio disponible */
+}
+
+#main-footer {
+    /* tu footer normal */
+}
+
+        .container {
+            flex: 1;
+            /* Asegura que el contenido ocupe todo el espacio disponible */
+        }
+
+        /* Este es tu footer original, sin cambios */
+        #main-footer {
+            background-color: #222;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+            margin-top: auto;
+            /* Esto asegura que el footer se quede al final */
+        }
+
+        F body {
 
             background: #f0f0f0;
 
@@ -370,6 +351,7 @@ $stmt->close();
             font-size: 4px !important;
             /* Cambia el 24px al tamaño que prefieras */
         }
+        
     </style>
 </head>
 

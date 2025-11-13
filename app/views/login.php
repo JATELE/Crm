@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: url(https://media.istockphoto.com/id/1176439818/es/foto/haciendo-un-recuerdo.jpg?s=612x612&w=0&k=20&c=xLTb_SUczMaZcpWBAOsFeleUvQwiAGC155LyIxoLsSY=) no-repeat;
+      background: url(https://travel-and-live.com/images/productos/20150109105650pucallpa.jpg) no-repeat;
       background-size: cover;
       background-position: center;
     }
@@ -146,25 +146,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .input-box input {
       width: 100%;
       height: 100%;
-      background: transparent;
-      border: none;
+      background: rgba(0, 0, 0, 0.3);
+      /* 🔹 Fondo oscuro translúcido */
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
       outline: none;
-      border: 2px solid rgba(255, 255, 255, 0.2);
       font-size: 16px;
       color: #fff;
       padding: 20px 45px 20px 20px;
+      transition: all 0.3s ease;
     }
 
+    /* 🔸 Efecto al hacer clic o escribir */
+    .input-box input:focus {
+      background: rgba(0, 0, 0, 0.5);
+      /* Fondo más oscuro al enfocar */
+      border-color: #fff;
+    }
+
+    /* 🔸 Placeholder (texto dentro del campo) */
     .input-box input::placeholder {
-      color: #fff;
+      color: rgba(255, 255, 255, 0.8);
     }
 
+    /* 🔸 Ícono del campo */
     .input-box i {
       position: absolute;
       right: 20px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 20px;
+      color: #fff;
     }
 
     .wrapper .remember-forgot {
@@ -216,6 +228,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     .register-link p a:hover {
       text-decoration: underline;
+    }
+
+    input:-webkit-autofill {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+      -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
+      -webkit-text-fill-color: #fff !important;
+      transition: background-color 5000s ease-in-out 0s;
+      border-radius: 8px;
+    }
+
+    /* 🔹 También para cuando el campo tiene foco o hover */
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:hover {
+      -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5) inset !important;
+      -webkit-text-fill-color: #fff !important;
     }
   </style>
 </head>

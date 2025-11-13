@@ -86,7 +86,7 @@ while ($row = $res_camp_enc->fetch_assoc()) {
             </span>
           <?php else: ?>
             <span class="label label-default" style="font-size:13px; padding:5px 10px; border-radius:10px;">
-              <i class="fa fa-lock"></i> Versión Gratis
+              <i class="fa fa-lock"></i> Versión 1.o
             </span>
           <?php endif; ?>
         </li>
@@ -179,7 +179,7 @@ while ($row = $res_camp_enc->fetch_assoc()) {
         <?php if ($licenciaActiva): ?>
           <small class="text-success"><i class="fa fa-star"></i> PRO</small>
         <?php else: ?>
-          <small class="text-muted"><i class="fa fa-lock"></i> Gratis</small>
+          <small class="text-muted"><i class="fa fa-lock"></i>V 1.0</small>
         <?php endif; ?>
       </div>
     </div>

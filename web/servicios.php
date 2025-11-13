@@ -251,137 +251,679 @@
   </nav>
 
   <section class="container my-5">
-    <h2 class="text-center mb-4 fw-bold text-success">🌍 Servicios Turísticos</h2>
     <div class="row g-4 justify-content-center">
+      <div class="col-md-8">
+        <h3 class="text-center mb-4 titulo-imagen">Planes turísticos</h3>
+        <p class="text-center text-muted mb-5">
+          Explora los mejores servicios turísticos en Ucayali. Desde alojamientos confortables hasta experiencias
+          inolvidables, todo al alcance de un clic.
+        </p>
 
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-hotel fa-3x mb-3 text-primary"></i>
-            <h5 class="card-title fw-bold">Hoteles</h5>
-            <p class="card-text">Descansa en los mejores alojamientos de la región con precios accesibles y cómodas
-              instalaciones.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">Ver más</a>
-          </div>
+        <style>
+          .titulo-imagen {
+            font-size: 3rem;
+            /* Tamaño grande */
+            font-weight: 900;
+            /* Muy grueso */
+            background: url('img/pucallpa.jpg') no-repeat center/cover;
+            /* Imagen de fondo */
+            -webkit-background-clip: text;
+            /* Safari/Chrome */
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+          }
+        </style>
+
+
+
+        <div class="row g-4 justify-content-center">
+
+          <section class="container my-5">
+
+
+            <!-- Tours -->
+            <div class="row align-items-center mb-5 bg-light p-4 rounded-4 shadow-sm flex-wrap">
+              <div class="col-12 col-md-6 d-flex justify-content-center mb-3 mb-md-0">
+                <!-- 🔹 Video adaptable -->
+                <div class="video-container">
+                  <video autoplay muted loop playsinline>
+                    <source src="img/tour.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                  </video>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6 text-center text-md-start">
+                <h4 class="fw-bold text-primary">Tours y Excursiones</h4>
+                <ul class="list-unstyled">
+                  <li>✅ Tours culturales y históricos</li>
+                  <li>✅ Aventuras eco-turísticas</li>
+                  <li>✅ Recorridos gastronómicos</li>
+                  <li>✅ Excursiones personalizadas</li>
+                  <li>✅ Guías expertos locales</li>
+                </ul>
+                <a href="#" class="btn btn-outline-primary mt-3 rounded-pill">Ver Tours Disponibles</a>
+              </div>
+            </div>
+
+
+            <!-- 🔸 Estilos -->
+            <style>
+              .video-container {
+                position: relative;
+                width: 300%;
+                max-width: 600px;
+                /* tamaño máximo en pantallas grandes */
+                aspect-ratio: 3 / 2;
+                /* mantiene proporción 300x200 */
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+              }
+
+              .video-container video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                border-radius: 15px;
+                background-color: #000;
+              }
+
+              /* 📱 En celular, se centra el video y el texto va debajo */
+              @media (max-width: 768px) {
+                .video-container {
+                  max-width: 90%;
+                  margin: 0 auto 15px;
+                }
+
+                .row.align-items-center {
+                  text-align: center;
+                }
+              }
+            </style>
+
+
+
+            <!-- Hoteles -->
+            <div class="row align-items-center mb-5 bg-light p-4 rounded-4 shadow-sm flex-md-row-reverse">
+              <div class="col-12 col-md-6 d-flex justify-content-center mb-3 mb-md-0">
+                <!-- 🔹 Video adaptable -->
+                <div class="video-container">
+                  <video autoplay muted loop playsinline>
+                    <source src="img/hospedaje.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                  </video>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <h4 class="fw-bold text-primary">Hospedaje</h4>
+                <ul class="list-unstyled">
+                  <li>✅ Hoteles 4 y 5 estrellas</li>
+                  <li>✅ Boutique y resorts exclusivos</li>
+                  <li>✅ Mejores tarifas garantizadas</li>
+                  <li>✅ Reservas instantáneas</li>
+                  <li>✅ Asistencia 24/7</li>
+                </ul>
+                <a href="#" class="btn btn-outline-success mt-3 rounded-pill">Buscar Hoteles</a>
+              </div>
+            </div>
+
+            <!-- Restaurantes -->
+            <div class="row align-items-center mb-5 bg-light p-4 rounded-4 shadow-sm">
+              <div class="col-12 col-md-6 d-flex justify-content-center mb-3 mb-md-0">
+                <!-- 🔹 Video adaptable -->
+                <div class="video-container">
+                  <video autoplay muted loop playsinline>
+                    <source src="img/gastronomia.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                  </video>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h4 class="fw-bold text-primary">Experiencias Gastronómicas</h4>
+                <ul class="list-unstyled">
+                  <li>✅ Reservas en restaurantes exclusivos</li>
+                  <li>✅ Tours culinarios guiados</li>
+                  <li>✅ Clases de cocina tradicional</li>
+                  <li>✅ Degustaciones premium</li>
+                  <li>✅ Recomendaciones personalizadas</li>
+                </ul>
+                <a href="#" class="btn btn-outline-warning mt-3 rounded-pill">Descubrir Restaurantes</a>
+              </div>
+            </div>
+
+            <!-- Viajes -->
+            <section class="py-5">
+              <div class="container">
+                <div class="row align-items-center mb-5 bg-light p-4 rounded-4 shadow-sm flex-wrap">
+
+                  <!-- 🔹 Texto a la izquierda -->
+                  <div class="col-12 col-md-6 text-center text-md-start">
+                    <h4 class="fw-bold text-success">Viajes Inolvidables</h4>
+                    <ul class="list-unstyled">
+                      <li>✅ Paquetes nacionales e internacionales</li>
+                      <li>✅ Viajes en familia o pareja</li>
+                      <li>✅ Experiencias únicas</li>
+                      <li>✅ Alojamientos exclusivos</li>
+                      <li>✅ Atención personalizada</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline-success mt-3 rounded-pill">Ver Viajes</a>
+                  </div>
+
+                  <!-- 🔹 Video o imagen a la derecha -->
+                  <div class="col-12 col-md-6 d-flex justify-content-center mb-3 mb-md-0 order-md-last">
+                    <div class="video-container">
+                      <video autoplay muted loop playsinline>
+                        <source src="img/viaje.mp4" type="video/mp4">
+                        Tu navegador no soporta la reproducción de video.
+                      </video>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </section>
+
+
+            <!-- 🌟 SECCIÓN RECOMPENSAS -->
+            <section class="py-5" style="background-color: #f0f0f0;">
+              <div class="container text-center position-relative">
+                <h2 class="fw-bold mb-5 titulo-imagen">Explora tus recompensas</h2>
+
+                <!-- 🔹 Carrusel -->
+                <div id="recompensasCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500">
+                  <div class="carousel-inner">
+
+                    <!-- 🔸 Grupo 1 -->
+                    <div class="carousel-item active">
+                      <div class="row justify-content-center">
+                        <!-- Hotel -->
+                        <div class="col-md-4 col-sm-6 mb-3">
+                          <div class="reward-card mx-auto">
+                            <div class="reward-img-container">
+                              <img src="img/hotel.jpg" class="reward-img" alt="Hoteles">
+                            </div>
+                            <div class="reward-body text-start">
+                              <h5 class="fw-bold mb-1">20% Descuento en Hoteles</h5>
+                              <p class="text-muted small mb-2">
+                                Canjea <strong>500 puntos</strong> y disfruta de una estadía más económica en hoteles
+                                asociados.
+                              </p>
+                              <span class="price">500 pts</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Cena -->
+                        <div class="col-md-4 col-sm-6 mb-3">
+                          <div class="reward-card mx-auto">
+                            <div class="reward-img-container">
+                              <img src="img/cena.jpg" class="reward-img" alt="Cena para 2">
+                            </div>
+                            <div class="reward-body text-start">
+                              <h5 class="fw-bold mb-1">Cena para 2 Personas</h5>
+                              <p class="text-muted small mb-2">
+                                Por <strong>800 puntos</strong> disfruta de una cena en un restaurante seleccionado.
+                              </p>
+                              <span class="price">800 pts</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Tour -->
+                        <div class="col-md-4 col-sm-6 mb-3">
+                          <div class="reward-card mx-auto">
+                            <div class="reward-img-container">
+                              <img src="img/ruta.jpg" class="reward-img" alt="Tour Gratuito">
+                            </div>
+                            <div class="reward-body text-start">
+                              <h5 class="fw-bold mb-1">Tour Gratuito</h5>
+                              <p class="text-muted small mb-2">
+                                Canjea <strong>1000 puntos</strong> y accede a un tour guiado por las mejores rutas
+                                turísticas.
+                              </p>
+                              <span class="price">1000 pts</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 🔸 Grupo 2 -->
+                    <div class="carousel-item">
+                      <div class="row justify-content-center">
+                        <!-- Chocolates -->
+                        <div class="col-md-4 col-sm-6 mb-3">
+                          <div class="reward-card mx-auto">
+                            <div class="reward-img-container">
+                              <img src="img/chocolate.jpg" class="reward-img" alt="Chocolates">
+                            </div>
+                            <div class="reward-body text-start">
+                              <h5 class="fw-bold mb-1">Caja de Chocolates</h5>
+                              <p class="text-muted small mb-2">
+                                Endulza tu día con una selección de chocolates artesanales.
+                              </p>
+                              <span class="price">150 pts</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Galletas -->
+                        <div class="col-md-4 col-sm-6 mb-3">
+                          <div class="reward-card mx-auto">
+                            <div class="reward-img-container">
+                              <img src="img/galletas.jpg" class="reward-img" alt="Galletas">
+                            </div>
+                            <div class="reward-body text-start">
+                              <h5 class="fw-bold mb-1">Galletas Artesanales</h5>
+                              <p class="text-muted small mb-2">
+                                Un snack perfecto para acompañar tu café o té favorito.
+                              </p>
+                              <span class="price">100 pts</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Bebida -->
+                        <div class="col-md-4 col-sm-6 mb-3">
+                          <div class="reward-card mx-auto">
+                            <div class="reward-img-container">
+                              <img src="img/bebida.jpg" class="reward-img" alt="Bebida">
+                            </div>
+                            <div class="reward-body text-start">
+                              <h5 class="fw-bold mb-1">Bebida Personal</h5>
+                              <p class="text-muted small mb-2">
+                                Refresca tu día con tu bebida favorita en presentación individual.
+                              </p>
+                              <span class="price">50 pts</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- 🔹 Flechas fuera del carrusel -->
+                  <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#recompensasCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  </button>
+                  <button class="carousel-control-next custom-next" type="button" data-bs-target="#recompensasCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- 🌈 ESTILOS -->
+            <style>
+              /* 🌟 Tarjetas principales */
+              .reward-card {
+                background: #e6dedeff;
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                height: 100%;
+                transition: box-shadow 0.3s ease;
+                display: flex;
+                flex-direction: column;
+              }
+
+              .reward-card:hover {
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+              }
+
+              /* 🔹 Imagen con efecto zoom */
+              .reward-img-container {
+                overflow: hidden;
+                height: 180px;
+              }
+
+              .reward-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.4s ease;
+              }
+
+              .reward-card:hover .reward-img {
+                transform: scale(1.08);
+              }
+
+              /* 🔹 Cuerpo de la tarjeta */
+              .reward-body {
+                flex-grow: 1;
+                padding: 15px;
+                min-height: 150px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+
+              .price {
+                color: #f7941d;
+                font-weight: bold;
+                font-size: 1rem;
+                margin-top: auto;
+              }
+
+              /* 🌟 Flechas personalizadas */
+              .carousel-control-prev.custom-prev,
+              .carousel-control-next.custom-next {
+                width: 5%;
+                top: 50%;
+                transform: translateY(-50%);
+                opacity: 0.8;
+                transition: all 0.3s ease;
+              }
+
+              .carousel-control-prev.custom-prev {
+                left: -60px;
+              }
+
+              .carousel-control-next.custom-next {
+                right: -60px;
+              }
+
+              .carousel-control-prev-icon,
+              .carousel-control-next-icon {
+                filter: invert(1);
+                width: 2rem;
+                height: 2rem;
+              }
+
+              .carousel-control-prev:hover,
+              .carousel-control-next:hover {
+                opacity: 1;
+                transform: scale(1.1) translateY(-50%);
+              }
+
+              /* 🌟 Responsivo móvil */
+              @media (max-width: 768px) {
+                .carousel-control-prev.custom-prev {
+                  left: -35px;
+                }
+
+                .carousel-control-next.custom-next {
+                  right: -35px;
+                }
+
+                .reward-img-container {
+                  height: 150px;
+                }
+
+                .price {
+                  font-size: 0.85rem;
+                }
+              }
+            </style>
+
+            <!-- ⚙️ SCRIPT -->
+            <script>
+              const btn = document.getElementById('toggleServicesBtn');
+              const extraServices = document.querySelectorAll('.extra-service');
+              btn.addEventListener('click', () => {
+                const show = extraServices[0].style.display === 'none';
+                extraServices.forEach(el => el.style.display = show ? 'block' : 'none');
+                btn.textContent = show ? 'Ver menos' : 'Ver más';
+              });
+            </script>
+
+
+            <!-- 🎨 ESTILOS -->
+            <style>
+              .offer-card {
+                position: relative;
+                height: 300px;
+                border-radius: 20px;
+                overflow: hidden;
+                background-size: cover;
+                background-position: center;
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
+                cursor: pointer;
+              }
+
+              .offer-card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+              }
+
+              .offer-overlay {
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.45);
+                transition: background 0.3s ease;
+              }
+
+              .offer-card:hover .offer-overlay {
+                background: rgba(0, 0, 0, 0.6);
+              }
+
+              .offer-content {
+                position: absolute;
+                bottom: 0;
+                color: #f7e6e6ff;
+                text-align: left;
+                padding: 20px;
+                width: 100%;
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+              }
+
+              .offer-content h5 {
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+              }
+
+              .offer-content p {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+              }
+
+              .price {
+                background: rgba(255, 255, 255, 0.2);
+                padding: 6px 12px;
+                border-radius: 8px;
+                font-weight: bold;
+                font-size: 0.9rem;
+              }
+
+              #toggleServicesBtn {
+                background-color: #007bff;
+                border: none;
+                border-radius: 25px;
+                padding: 10px 25px;
+                transition: all 0.3s ease;
+              }
+
+              #toggleServicesBtn:hover {
+                background-color: #0056b3;
+                transform: scale(1.05);
+              }
+            </style>
+
+            <!-- ⚙️ SCRIPT -->
+            <script>
+              const btn = document.getElementById('toggleServicesBtn');
+              const extraServices = document.querySelectorAll('.extra-service');
+              btn.addEventListener('click', () => {
+                const show = extraServices[0].style.display === 'none';
+                extraServices.forEach(el => el.style.display = show ? 'block' : 'none');
+                btn.textContent = show ? 'Ver menos' : 'Ver más';
+              });
+            </script>
+
+
+            <style>
+              .offer-card {
+                position: relative;
+                background-size: cover;
+                background-position: center;
+                height: 300px;
+                border-radius: 20px;
+                overflow: hidden;
+                cursor: pointer;
+                transition: transform 0.5s ease, box-shadow 0.5s ease;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+              }
+
+              .offer-card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+              }
+
+              .offer-content {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                padding: 20px;
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+                color: white;
+                text-align: left;
+              }
+
+              .offer-content h5 {
+                margin-bottom: 5px;
+                font-size: 1.3rem;
+              }
+
+              .offer-content p {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+              }
+
+              .price {
+                font-size: 1.1rem;
+                font-weight: bold;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 5px 10px;
+                border-radius: 8px;
+                display: inline-block;
+              }
+
+              .titulo-imagen {
+                font-size: 3rem;
+                font-weight: 900;
+                background: url('img/pucallpa.jpg') no-repeat center/cover;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+                text-transform: uppercase;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+              }
+            </style>
+
+            <script>
+              const btn = document.getElementById('toggleServicesBtn');
+              const extraServices = document.querySelectorAll('.extra-service');
+
+              btn.addEventListener('click', () => {
+                const isHidden = extraServices[0].style.display === 'none';
+                extraServices.forEach(el => {
+                  el.style.display = isHidden ? 'block' : 'none';
+                });
+                btn.textContent = isHidden ? 'Ver menos' : 'Ver más';
+              });
+            </script>
+
+
+            <style>
+              .service-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                cursor: pointer;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              }
+
+              .service-card:hover,
+              .service-card:focus-within {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 25px rgba(29, 78, 216, 0.3);
+                outline: none;
+              }
+
+              .service-card i {
+                font-size: 3rem;
+                display: block;
+                margin: 0 auto 15px;
+              }
+            </style>
+
+            <script>
+              const btn = document.getElementById('toggleServicesBtn');
+              const extraServices = document.querySelectorAll('.extra-service');
+
+              btn.addEventListener('click', () => {
+                const isHidden = extraServices[0].style.display === 'none';
+
+                extraServices.forEach(el => {
+                  el.style.display = isHidden ? 'block' : 'none';
+                });
+
+                btn.textContent = isHidden ? 'Ver menos' : 'Ver más';
+              });
+            </script>
+
+            </p>
         </div>
       </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-utensils fa-3x mb-3 text-danger"></i>
-            <h5 class="card-title fw-bold">Restaurantes</h5>
-            <p class="card-text">Disfruta de una variedad de platos locales e internacionales en los mejores
-              restaurantes.</p>
-            <a href="#" class="btn btn-outline-danger btn-sm rounded-pill">Ver más</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-route fa-3x mb-3 text-success"></i>
-            <h5 class="card-title fw-bold">Planes Turísticos</h5>
-            <p class="card-text">Explora rutas únicas con guías especializados y experiencias inolvidables para toda la
-              familia.</p>
-            <a href="#" class="btn btn-outline-success btn-sm rounded-pill">Ver más</a>
-          </div>
-        </div>
-      </div>
-
+    </div>
     </div>
   </section>
 
-  <section class="container my-5">
-    <h2 class="text-center mb-4 fw-bold text-warning">🎁 Recompensas con tus Puntos</h2>
-    <p class="text-center text-muted mb-5">
-      Responde encuestas, acumula puntos y canjéalos por experiencias y productos increíbles.
-      ¡Aquí algunos ejemplos de lo que puedes conseguir!
-    </p>
+  <style>
+    /* Todos los íconos de las tarjetas uniformes y centrados */
+    .card-body i {
+      font-size: 3rem;
+      /* mismo tamaño para todos */
+      display: block;
+      /* que cada ícono sea un bloque */
+      margin: 0 auto 15px;
+      /* centrado horizontal y espacio inferior */
+    }
 
-    <div class="row g-4 justify-content-center">
+    .titulo-imagen {
+      font-size: 3rem;
+      /* Tamaño grande */
+      font-weight: 900;
+      /* Muy grueso */
+      background: url('img/pucallpa.jpg') no-repeat center/cover;
+      /* Imagen de fondo */
+      -webkit-background-clip: text;
+      /* Safari/Chrome */
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      /* centrado de "Explora Ucayali" */
+    }
+  </style>
+  <style>
+    /* Solo para centrar el título de recompensas */
+    .titulo-imagen {
+      font-size: 3rem;
+      font-weight: 900;
+      background: url('img/pucallpa.jpg') no-repeat center/cover;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+  </style>
 
-
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-bed fa-3x mb-3 text-primary"></i>
-            <h5 class="card-title fw-bold">20% Descuento en Hoteles</h5>
-            <p class="card-text">Canjea <strong>500 puntos</strong> y disfruta de una estadía más económica en hoteles
-              asociados.</p>
-            <span class="badge bg-primary">500 pts</span>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-utensils fa-3x mb-3 text-danger"></i>
-            <h5 class="card-title fw-bold">Cena para 2 Personas</h5>
-            <p class="card-text">Por <strong>800 puntos</strong> disfruta de una cena en un restaurante seleccionado.
-            </p>
-            <span class="badge bg-danger">800 pts</span>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-bus fa-3x mb-3 text-success"></i>
-            <h5 class="card-title fw-bold">Tour Gratuito</h5>
-            <p class="card-text">Canjea <strong>1000 puntos</strong> y accede a un tour guiado por las mejores rutas
-              turísticas.</p>
-            <span class="badge bg-success">1000 pts</span>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-3">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-candy-cane fa-3x mb-3 text-pink"></i>
-            <h5 class="card-title fw-bold">Caja de Chocolates</h5>
-            <p class="card-text">Endulza tu día con una selección de chocolates.
-              <span class="badge bg-warning text-dark">150 pts</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-cookie-bite fa-3x mb-3 text-success"></i>
-            <h5 class="card-title fw-bold">Galletas Artesanales</h5>
-            <p class="card-text">Un snack perfecto para acompañar tu café.
-              <span class="badge bg-warning text-dark">100 pts</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-3">
-        <div class="card h-100 shadow-sm border-0 rounded-4">
-          <div class="card-body text-center">
-            <i class="fas fa-wine-bottle fa-3x mb-3 text-info"></i>
-            <h5 class="card-title fw-bold">Gaseosa Personal</h5>
-            <p class="card-text">Refresca tu día con tu bebida favorita.
-              <span class="badge bg-warning text-dark">50 pts</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <?php require_once("default/footer.php"); ?>
   <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">

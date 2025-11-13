@@ -288,18 +288,18 @@ if (isset($_POST['buscar'])) {
                     </td>
 
                     <td>
-                      <!-- 🔹 Eliminar -->
-                      <button class="btn btn-danger btn-sm eliminar-cliente" data-dni="<?= $cliente['dni_cliente'] ?>"
-                        title="Eliminar">
-                        <i class="fa fa-trash"></i>
-                      </button>
+                      <!-- 🗑️ Eliminar -->
+                      <a href="#" class="btn btn-danger btn-sm eliminar-cliente" data-dni="<?= $cliente['dni_cliente'] ?>"
+                        title="Eliminar cliente">
+                        <i class="fas fa-trash"></i>
+                      </a>
 
-                      <!-- 🔹 WhatsApp -->
+                      <!-- 💬 WhatsApp -->
                       <?php if (!empty($cliente['telefono_cliente'])): ?>
-                        <button class="btn btn-success btn-sm enviar-wsp" data-telefono="<?= $cliente['telefono_cliente'] ?>"
-                          title="Enviar WhatsApp">
+                        <a href="https://wa.me/<?= $cliente['telefono_cliente'] ?>?text=Hola%20👋,%20te%20contactamos%20desde%20nuestra%20agencia."
+                          target="_blank" class="btn btn-success btn-sm" title="Enviar WhatsApp">
                           <i class="fa fa-whatsapp"></i>
-                        </button>
+                        </a>
                       <?php else: ?>
                         <i class="fa fa-ban text-muted" title="Sin número"></i>
                       <?php endif; ?>
@@ -313,11 +313,11 @@ if (isset($_POST['buscar'])) {
               <?php endif; ?>
             </tbody>
           </table>
-    </div>
+        </div>
 
-    </section>
-  </div>
-  <?php require_once("default/footer.php"); ?>
+      </section>
+    </div>
+    <?php require_once("default/footer.php"); ?>
   </div>
 
   <?php require_once("default/links-script.php"); ?>
@@ -347,20 +347,20 @@ if (isset($_POST['buscar'])) {
         fetch('../controllers/ClienteController.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `accion=actualizar_inline&dni=${dni}&campo=${campo}&valor=${encodeURIComponent(nuevoValor)}`
+          body: accion = actualizar_inline & dni=${ dni } & campo=${ campo } & valor=${ encodeURIComponent(nuevoValor) }
         })
-          .then(res => res.text())
-          .then(resp => {
-            if (resp.trim() === "ok") {
-              this.style.backgroundColor = "#c8f7c5"; // verde clarito = guardado
-              setTimeout(() => this.style.backgroundColor = "", 800);
-            } else {
-              this.style.backgroundColor = "#f8d7da"; // rojo = error
-              setTimeout(() => this.style.backgroundColor = "", 800);
-              console.error("Error al guardar:", resp);
-            }
-          })
-          .catch(err => console.error("❌ Error de red:", err));
+      .then(res => res.text())
+      .then(resp => {
+        if (resp.trim() === "ok") {
+          this.style.backgroundColor = "#c8f7c5"; // verde clarito = guardado
+          setTimeout(() => this.style.backgroundColor = "", 800);
+        } else {
+          this.style.backgroundColor = "#f8d7da"; // rojo = error
+          setTimeout(() => this.style.backgroundColor = "", 800);
+          console.error("Error al guardar:", resp);
+        }
+      })
+      .catch(err => console.error("❌ Error de red:", err));
       }
     });
   </script>
@@ -398,6 +398,121 @@ if (isset($_POST['buscar'])) {
       }
     });
   </script>
+  <!-- ✅ SCRIPT: Edición inline de campos -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.editable').forEach(cell => {
+        // --- Guardar al salir del campo (blur)
+        cell.addEventListener('blur', guardarCambio);
+
+        // --- Guardar también al presionar Enter
+        cell.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault(); // evita salto de línea
+            this.blur(); // fuerza el blur para que dispare el guardado
+          }
+        });
+      });
+
+      // --- Función para enviar actualización al servidor
+      function guardarCambio() {
+        const nuevoValor = this.innerText.trim();
+        const dni = this.dataset.dni;
+        const campo = this.dataset.campo;
+
+        fetch('../controllers/ClienteController.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `accion=actualizar_inline&dni=${encodeURIComponent(dni)}&campo=${encodeURIComponent(campo)}&valor=${encodeURIComponent(nuevoValor)}`
+        })
+          .then(res => res.text())
+          .then(resp => {
+            if (resp.trim() === "ok") {
+              this.style.backgroundColor = "#c8f7c5"; // verde clarito = guardado
+              setTimeout(() => this.style.backgroundColor = "", 800);
+            } else {
+              this.style.backgroundColor = "#f8d7da"; // rojo = error
+              setTimeout(() => this.style.backgroundColor = "", 800);
+              console.error("Error al guardar:", resp);
+            }
+          })
+          .catch(err => console.error("❌ Error de red:", err));
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".eliminar-cliente").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          e.preventDefault();
+
+          const dni = btn.dataset.dni;
+          const fila = btn.closest("tr");
+          const url = `../controllers/ClienteController.php?accion=eliminar&dni=${encodeURIComponent(dni)}`;
+
+          const confirm = await Swal.fire({
+            title: "¿Eliminar cliente?",
+            text: `Se eliminará el cliente con DNI ${dni}.`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+          });
+
+          if (!confirm.isConfirmed) return;
+
+          try {
+            const res = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+            const texto = await res.text();
+
+            if (texto.includes("ok")) {
+              fila.style.transition = "opacity 0.4s, transform 0.4s";
+              fila.style.opacity = "0";
+              fila.style.transform = "translateX(-20px)";
+              setTimeout(() => fila.remove(), 400);
+
+              Swal.fire({
+                icon: "success",
+                title: "Cliente eliminado",
+                showConfirmButton: false,
+                timer: 1200
+              });
+
+            } else if (texto.includes("relacion")) {
+              Swal.fire({
+                icon: "warning",
+                title: "No puedes eliminar este cliente",
+                text: "Ya respondió una encuesta.",
+                confirmButtonText: "Entendido"
+              });
+
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error al eliminar",
+                text: texto || "Error desconocido"
+              });
+            }
+
+          } catch (err) {
+            console.error(err);
+            Swal.fire({
+              icon: "error",
+              title: "Error de conexión",
+              text: "No se pudo conectar con el servidor."
+            });
+          }
+        });
+      });
+    });
+
+  </script>
+
+
 </body>
 
 </html>

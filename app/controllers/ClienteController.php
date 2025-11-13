@@ -13,21 +13,17 @@ if ($accion === 'eliminar' && isset($_GET['dni'])) {
     $dni = $_GET['dni'];
     try {
         $objeto->eliminar_cliente_por_dni($dni);
-        header("Location: ../views/panel_clientes_consultas.php?msg=eliminado");
+        echo "ok";
     } catch (mysqli_sql_exception $e) {
-        // Si hay restricción por encuesta respondida
         if (strpos($e->getMessage(), 'foreign key constraint') !== false) {
-            header("Location: ../views/panel_clientes_consultas.php?error=relacion");
+            echo "relacion";
         } else {
-            // Si ocurre otro error, mostrarlo
-            echo "<script>
-                    alert('Error al eliminar: " . addslashes($e->getMessage()) . "');
-                    window.location.href = '../views/panel_clientes_consultas.php';
-                  </script>";
+            echo "Error al eliminar: " . $e->getMessage();
         }
     }
     exit;
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -79,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($cfgRes && $cfgRow = $cfgRes->fetch_assoc())
         $versionPro = $cfgRow['version_pro'];
 
-    if ($totalClientes >= 10 && $versionPro !== 'S') {
+    if ($totalClientes >= 100 && $versionPro !== 'S') {
         $_SESSION['errores_registro']['limite'] = '⚠️ Límite de 10 clientes alcanzado. Activa la licencia PRO para continuar.';
         header("Location: ../views/panel_clientes.php");
         exit;
