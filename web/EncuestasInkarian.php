@@ -86,14 +86,57 @@
       }
     }
 
-    .top-bar {
-      background-color: #f89406;
-      color: white;
-      text-align: center;
-      padding: 8px 0;
+      .top-bar {
+      background: linear-gradient(90deg, #f38c47ff, #1dd1a1, #54a0ff);
+      background-size: 400% 400%;
+      animation: moveGradient 8s ease infinite;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+      position: relative;
+      font-size: 1.1rem;
       font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
     }
 
+    /* Movimiento del fondo */
+    @keyframes moveGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Texto desplazándose */
+    .moving-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: moveText 18s linear infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Palabra destacada */
+    .highlight {
+      color: #fff;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffe066;
+    }
     /* Footer general */
     #main-footer .footer-widget img {
       width: 15px;
@@ -222,7 +265,10 @@
 
 <body>
   <div class="top-bar">
-    🚚 Gana descuentos increíbles con tus puntos
+    <div class="moving-text">
+      🚚 ¡Gana <span class="highlight">descuentos increíbles</span> con tus puntos! 🎁
+      🚀 Canjea y ahorra en tus compras favoritas 💳
+    </div>
   </div>
 
   <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">

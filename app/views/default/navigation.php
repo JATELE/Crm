@@ -222,7 +222,7 @@ while ($row = $res_camp_enc->fetch_assoc()) {
           <ul class="treeview-menu">
             <li><a href="panel_encuesta_registrar.php"><i class="fa fa-circle-o"></i> Registrar</a></li>
             <li><a href="panel_crear_encuesta.php"><i class="fa fa-circle-o"></i> Crear Encuesta</a></li>
-            <li><a href="panel_usuarios_reportes.php"><i class="fa fa-circle-o"></i> Reportes</a></li>
+            
           </ul>
         </li>
 

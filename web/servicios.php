@@ -85,13 +85,56 @@
     }
 
     .top-bar {
-      background-color: #f89406;
-      color: white;
-      text-align: center;
-      padding: 8px 0;
+      background: linear-gradient(90deg, #f38c47ff, #1dd1a1, #54a0ff);
+      background-size: 400% 400%;
+      animation: moveGradient 8s ease infinite;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+      position: relative;
+      font-size: 1.1rem;
       font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
     }
 
+    /* Movimiento del fondo */
+    @keyframes moveGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Texto desplazándose */
+    .moving-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: moveText 18s linear infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Palabra destacada */
+    .highlight {
+      color: #fff;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffe066;
+    }
     /* Footer general */
     #main-footer .footer-widget img {
       width: 15px;
@@ -193,12 +236,115 @@
       font-size: 4px !important;
       /* Cambia el 24px al tamaño que prefieras */
     }
+            .navbar-nav .nav-item .nav-link.M11 {
+          color: #333;
+          /* color base del texto */
+          font-weight: 600;
+          font-size: 1.05rem;
+          padding: 10px 0;
+          /* solo espacio vertical */
+          border-radius: 0;
+          /* sin esquinas redondeadas */
+          transition: color 0.3s ease;
+          position: relative;
+          text-transform: uppercase;
+
+          /* Animación al cargar */
+          opacity: 0;
+          transform: translateY(-20px);
+          animation: slideDown 0.6s ease forwards;
+        }
+
+        /* Animación escalonada para cada link */
+        .navbar-nav .nav-item:nth-child(1) .nav-link.M11 {
+          animation-delay: 0.2s;
+        }
+
+        .navbar-nav .nav-item:nth-child(2) .nav-link.M11 {
+          animation-delay: 0.4s;
+        }
+
+        .navbar-nav .nav-item:nth-child(3) .nav-link.M11 {
+          animation-delay: 0.6s;
+        }
+
+        /* Hover elegante: solo color y línea */
+        .navbar-nav .nav-item .nav-link.M11:hover {
+          color: #ff6600;
+        }
+
+        /* Línea animada debajo del link */
+        .navbar-nav .nav-item .nav-link.M11::after {
+          content: '';
+          display: block;
+          width: 0;
+          height: 3px;
+          /* grosor de la línea */
+          background: #ff6600;
+          transition: width 0.3s ease;
+          border-radius: 2px;
+          margin-top: 5px;
+        }
+
+        .navbar-nav .nav-item .nav-link.M11:hover::after {
+          width: 100%;
+        }
+
+        /* Espaciado entre links aumentado para mayor separación */
+        .navbar-nav .nav-item {
+          margin-left: 3rem;
+          /* más separación horizontal */
+          margin-right: 3rem;
+        }
+
+        /* ===== Keyframes de animación al entrar ===== */
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+          .navbar-nav .nav-item {
+            margin-left: 2rem;
+            margin-right: 2rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .navbar-nav .nav-item .nav-link.M11 {
+            font-size: 0.95rem;
+            padding: 8px 0;
+          }
+
+          .navbar-nav .nav-item {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .navbar-nav .nav-item {
+            margin-left: 1rem;
+            margin-right: 1rem;
+          }
+        }
   </style>
 </head>
 
 <body>
   <div class="top-bar">
-    🚚 Gana descuentos increibles con tus puntos
+    <div class="moving-text">
+      🚚 ¡Gana <span class="highlight">descuentos increíbles</span> con tus puntos! 🎁
+      🚀 Canjea y ahorra en tus compras favoritas 💳
+    </div>
   </div>
 
   <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">

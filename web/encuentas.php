@@ -34,55 +34,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_encuesta"])) {
     }
     if (isset($_POST["respuestas"]) && is_array($_POST["respuestas"])) {
 
-    foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
-        $respuesta = trim($respuesta);
-        if ($respuesta !== "") {
-            $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
-            $stmt->execute();
-            $stmt->close();
+        foreach ($_POST["respuestas"] as $id_pregunta => $respuesta) {
+            $respuesta = trim($respuesta);
+            if ($respuesta !== "") {
+                $stmt = $conn->prepare("INSERT INTO respuestas2 (id_encuesta, id_pregunta, dni_cliente, respuesta, fecha_respuesta) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("iisss", $id_encuesta, $id_pregunta, $dni_cliente, $respuesta, $fecha);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        // Lógica específica según la encuesta
+        if ($id_encuesta == 1) { // Deseo
+            $destino = trim($_POST["respuestas"][1] ?? "");
+            $presupuesto = floatval($_POST["respuestas"][2] ?? 0);
+            $tiempo = trim($_POST["respuestas"][3] ?? "");
+
+            $stmt_deseo = $conn->prepare("INSERT INTO deseo2 (dni_cliente, destino, peso_indicador, presupuesto_estimado, tiempo_estimado) VALUES (?, ?, ?, ?, ?)");
+            $peso_indicador = 0; // opcional
+            $stmt_deseo->bind_param("ssdds", $dni_cliente, $destino, $peso_indicador, $presupuesto, $tiempo);
+            $stmt_deseo->execute();
+            $stmt_deseo->close();
+        }
+
+        if ($id_encuesta == 2) { // Experiencia
+            $bien_adquirido = trim($_POST["respuestas"][4] ?? "");
+            $calificacion = intval($_POST["respuestas"][5] ?? 0);
+            $lugar = trim($_POST["respuestas"][6] ?? "");
+            $descripcion = trim($_POST["respuestas"][7] ?? "");
+            $tipo = trim($_POST["respuestas"][8] ?? "");
+            $fecha_visita = trim($_POST["respuestas"][9] ?? null);
+
+            $stmt_exp = $conn->prepare("INSERT INTO experiencia2 (dni_cliente, bien_adquirido, calificacion, rango_costo, lugar, descripcion, tipo_de_viaje, fecha_visita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $rango_costo = ""; // opcional
+            $stmt_exp->bind_param("ssisssss", $dni_cliente, $bien_adquirido, $calificacion, $rango_costo, $lugar, $descripcion, $tipo, $fecha_visita);
+            $stmt_exp->execute();
+            $stmt_exp->close();
+        }
+
+        if ($id_encuesta == 3) { // Interacciones
+            $fecha_inter = trim($_POST["respuestas"][10] ?? null);
+            $canal = trim($_POST["respuestas"][11] ?? "");
+            $descripcion_int = trim($_POST["respuestas"][12] ?? "");
+
+            $stmt_int = $conn->prepare("INSERT INTO interacciones2 (dni_cliente, fecha, canal, descripcion) VALUES (?, ?, ?, ?)");
+            $stmt_int->bind_param("ssss", $dni_cliente, $fecha_inter, $canal, $descripcion_int);
+            $stmt_int->execute();
+            $stmt_int->close();
         }
     }
-
-    // Lógica específica según la encuesta
-    if ($id_encuesta == 1) { // Deseo
-        $destino = trim($_POST["respuestas"][1] ?? "");
-        $presupuesto = floatval($_POST["respuestas"][2] ?? 0);
-        $tiempo = trim($_POST["respuestas"][3] ?? "");
-
-        $stmt_deseo = $conn->prepare("INSERT INTO deseo2 (dni_cliente, destino, peso_indicador, presupuesto_estimado, tiempo_estimado) VALUES (?, ?, ?, ?, ?)");
-        $peso_indicador = 0; // opcional
-        $stmt_deseo->bind_param("ssdds", $dni_cliente, $destino, $peso_indicador, $presupuesto, $tiempo);
-        $stmt_deseo->execute();
-        $stmt_deseo->close();
-    }
-
-    if ($id_encuesta == 2) { // Experiencia
-        $bien_adquirido = trim($_POST["respuestas"][4] ?? "");
-        $calificacion = intval($_POST["respuestas"][5] ?? 0);
-        $lugar = trim($_POST["respuestas"][6] ?? "");
-        $descripcion = trim($_POST["respuestas"][7] ?? "");
-        $tipo = trim($_POST["respuestas"][8] ?? "");
-        $fecha_visita = trim($_POST["respuestas"][9] ?? null);
-
-        $stmt_exp = $conn->prepare("INSERT INTO experiencia2 (dni_cliente, bien_adquirido, calificacion, rango_costo, lugar, descripcion, tipo_de_viaje, fecha_visita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $rango_costo = ""; // opcional
-        $stmt_exp->bind_param("ssisssss", $dni_cliente, $bien_adquirido, $calificacion, $rango_costo, $lugar, $descripcion, $tipo, $fecha_visita);
-        $stmt_exp->execute();
-        $stmt_exp->close();
-    }
-
-    if ($id_encuesta == 3) { // Interacciones
-        $fecha_inter = trim($_POST["respuestas"][10] ?? null);
-        $canal = trim($_POST["respuestas"][11] ?? "");
-        $descripcion_int = trim($_POST["respuestas"][12] ?? "");
-
-        $stmt_int = $conn->prepare("INSERT INTO interacciones2 (dni_cliente, fecha, canal, descripcion) VALUES (?, ?, ?, ?)");
-        $stmt_int->bind_param("ssss", $dni_cliente, $fecha_inter, $canal, $descripcion_int);
-        $stmt_int->execute();
-        $stmt_int->close();
-    }
-}
 }
 
 $encuestas = [];
@@ -149,40 +149,30 @@ $stmt->close();
     <style>
         html,
         body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-.container {
-    flex: 1; /* ocupa todo el espacio disponible */
-}
-
-#main-footer {
-    /* tu footer normal */
-}
+        /* BODY */
+        body {
+            background: #f0f0f0;
+        }
 
         .container {
             flex: 1;
-            /* Asegura que el contenido ocupe todo el espacio disponible */
         }
 
-        /* Este es tu footer original, sin cambios */
+        /* FOOTER */
         #main-footer {
             background-color: #222;
             color: #fff;
             padding: 40px 0;
             font-family: Arial, sans-serif;
             margin-top: auto;
-            /* Esto asegura que el footer se quede al final */
         }
 
-        F body {
-
-            background: #f0f0f0;
-
-        }
-
+        /* DROPDOWN */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -244,30 +234,62 @@ $stmt->close();
             }
         }
 
+        /* BARRA SUPERIOR */
         .top-bar {
-            background-color: #f89406;
-            color: white;
-            text-align: center;
-            padding: 8px 0;
+            background: linear-gradient(90deg, #f38c47ff, #1dd1a1, #54a0ff);
+            background-size: 400% 400%;
+            animation: moveGradient 8s ease infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 10px 0;
+            position: relative;
+            font-size: 1.1rem;
             font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
         }
 
-        /* Footer general */
+        @keyframes moveGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .moving-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: moveText 18s linear infinite;
+        }
+
+        @keyframes moveText {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .highlight {
+            color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ffe066;
+        }
+
+        /* FOOTER WIDGETS */
         #main-footer .footer-widget img {
             width: 15px;
-            /* cambia el tamaño */
             height: auto;
-            /* mantiene la proporción */
         }
 
-        #main-footer {
-            background-color: #222;
-            color: #fff;
-            padding: 40px 0;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Contenedor de columnas */
         #footer-widgets {
             display: flex;
             justify-content: space-between;
@@ -275,21 +297,17 @@ $stmt->close();
             gap: 20px;
         }
 
-        /* Cada columna */
         .footer-widget {
             flex: 1;
             min-width: 200px;
         }
 
-        /* Títulos */
         .footer-widget .title {
             color: #ff6600;
-            /* naranja */
             font-size: 18px;
             margin-bottom: 15px;
         }
 
-        /* Listas */
         .footer-widget ul {
             list-style: disc;
             margin: 0;
@@ -308,17 +326,15 @@ $stmt->close();
 
         .footer-widget ul li a:hover {
             color: #ff6600;
-            /* hover en naranja */
         }
 
-        /* Contacto */
         .footer-widget p,
         .footer-widget a {
             color: #ddd;
             font-size: 14px;
         }
 
-        /* Botones */
+        /* BOTÓNES */
         .wp-block-button__link {
             display: inline-block;
             padding: 8px 20px;
@@ -337,7 +353,6 @@ $stmt->close();
             color: #fff;
         }
 
-        /* Footer inferior */
         #footer-bottom {
             border-top: 1px solid #444;
             margin-top: 30px;
@@ -347,17 +362,130 @@ $stmt->close();
             color: #aaa;
         }
 
-        .et_pb_column .et_pb_blurb .et-pb-icon {
-            font-size: 4px !important;
-            /* Cambia el 24px al tamaño que prefieras */
+        /* ========== ACORDEÓN ========== */
+
+        .modern-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        
+
+        .accordion-item-modern {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e5e5;
+            overflow: visible;
+        }
+
+        .accordion-header-modern {
+            width: 100%;
+            background: #f7f9fc;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .accordion-header-modern:hover {
+            background: #eef2f7;
+        }
+
+        .accordion-header-modern .icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .accordion-header-modern .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header-modern.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body-modern {
+            max-height: none;
+            overflow: visible;
+            background: #ffffff;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+            height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .accordion-body-modern.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            height: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* Por si algún card corta contenido */
+        .question-card,
+        .question-input {
+            overflow: visible;
+        }
+
+        /* PREGUNTAS */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .question-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+
+        /* BOTÓN ENVIAR */
+        .submit-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .survey-submit-modern {
+            width: 250px;
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4facfe, #00c6ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
+
 </head>
 
 <body>
     <div class="top-bar">
-        🚚 Gana descuentos increíbles con tus puntos
+        <div class="moving-text">
+            🚚 ¡Gana <span class="highlight">descuentos increíbles</span> con tus puntos! 🎁
+            🚀 Canjea y ahorra en tus compras favoritas 💳
+        </div>
     </div>
 
     <nav class="navbar navbar-expand-lg border-bottom border-body py-4 p-3" style="background-color: #f7f3ec;">
@@ -407,36 +535,46 @@ $stmt->close();
     <div class="container my-5">
         <?php if (!empty($encuestas)): ?>
             <h2 class="mb-4 text-center">Encuestas Disponibles</h2>
-            <div class="accordion" id="accordionEncuestas">
+            <div class="modern-accordion">
                 <?php foreach ($encuestas as $encuesta): ?>
-                    <div class="accordion-item mb-3">
-                        <h2 class="accordion-header" id="heading_<?= $encuesta["id_encuesta"] ?>">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse_<?= $encuesta["id_encuesta"] ?>" aria-expanded="false"
-                                aria-controls="collapse_<?= $encuesta["id_encuesta"] ?>">
-                                <?= htmlspecialchars($encuesta["nombre_encuesta"]) ?>
-                            </button>
-                        </h2>
-                        <div id="collapse_<?= $encuesta["id_encuesta"] ?>" class="accordion-collapse collapse"
-                            aria-labelledby="heading_<?= $encuesta["id_encuesta"] ?>" data-bs-parent="#accordionEncuestas">
-                            <div class="accordion-body">
-                                <p class="text-muted"><?= htmlspecialchars($encuesta["descripcion"]) ?></p>
-                                <form method="POST">
-                                    <input type="hidden" name="id_encuesta" value="<?= $encuesta["id_encuesta"] ?>">
+                    <div class="accordion-item-modern">
+
+                        <!-- Título -->
+                        <button class="accordion-header-modern" type="button">
+                            <span class="icon">📋</span>
+                            <span class="title"><?= htmlspecialchars($encuesta["nombre_encuesta"]) ?></span>
+                            <span class="arrow">⌄</span>
+                        </button>
+
+                        <!-- Contenido -->
+                        <div class="accordion-body-modern">
+                            <p class="desc"><?= htmlspecialchars($encuesta["descripcion"]) ?></p>
+
+                            <form method="POST" class="survey-form-modern">
+                                <input type="hidden" name="id_encuesta" value="<?= $encuesta["id_encuesta"] ?>">
+
+                                <div class="question-grid">
                                     <?php foreach ($encuesta["preguntas"] as $pregunta): ?>
-                                        <div class="mb-2">
-                                            <label class="form-label"><?= htmlspecialchars($pregunta["pregunta"]) ?></label>
-                                            <textarea class="form-control form-control-sm"
-                                                name="respuestas[<?= $pregunta["id_pregunta"] ?>]" rows="2" required></textarea>
+                                        <div class="question-card">
+                                            <label><?= htmlspecialchars($pregunta["pregunta"]) ?></label>
+                                            <textarea
+                                                class="question-input"
+                                                name="respuestas[<?= $pregunta["id_pregunta"] ?>]"
+                                                rows="2" required></textarea>
                                         </div>
                                     <?php endforeach; ?>
-                                    <button type="submit" class="btn btn-success btn-sm mt-2">Enviar</button>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="submit-wrapper">
+                                    <button type="submit" class="survey-submit-modern">Enviar respuestas ✨</button>
+                                </div>
+
+                            </form>
+
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
         <?php else: ?>
             <div class="container my-5">
                 <div class="no-surveys-card text-center p-5 mx-auto"
@@ -452,6 +590,16 @@ $stmt->close();
             </div>
         <?php endif; ?>
     </div>
+    <script>
+        document.querySelectorAll(".accordion-header-modern").forEach(header => {
+            header.addEventListener("click", function() {
+                const body = this.nextElementSibling;
+
+                this.classList.toggle("active");
+                body.classList.toggle("open");
+            });
+        });
+    </script>
 
 </body>
 <?php require_once("default/footer.php"); ?>
